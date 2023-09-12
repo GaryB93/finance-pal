@@ -2,8 +2,25 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  font-size: 16px;
 
   color-scheme: light dark;
+  /*color palette*/
+  --white: #FFFFFF;
+  --aliceblue: #F0F7F9;
+  --azure: #D3E8EE;
+  --lightblue: #B6D9E2;
+  --lightblue2: #99CAD6;
+  --skyblue: #7CBBCB;
+  --moonstone: #489FB5;
+  --bluegreen: #469AAF;
+  --munsell: #3A8092;
+  --caribbeancurrent: #2F6775;
+  --midnightgreen: #295A66;
+  --gunmetal: #17333A;
+  --richblack: #0B191D;
+  --night: #060D0F;
+  
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -12,45 +29,79 @@
   -webkit-text-size-adjust: 100%;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 3em;
   line-height: 1.1;
 }
 
+input, button {
+  box-sizing: border-box;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+button {
+  cursor: pointer;
+}
+
+.primaryBtn {
+  background-image: linear-gradient(var(--azure), var(--lightblue2));
+  border: 1px solid var(--caribbeancurrent);
+  border-radius: .3rem;
+  color: var(--caribbeancurrent);
+}
+
+.primaryBtn:hover {
+  background-color: var(--munsell);
+}
+
+.secondaryBtn:hover {
+  background-color: var(--);
+}
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: var(--gunmetal);
+    background-color: var(--aliceblue);
   }
-  a:hover {
-    color: #747bff;
+
+  .secondaryBtn {
+    background-image: linear-gradient(var(--azure), var(--lightblue2));
+    border: 1px solid var(--caribbeancurrent);
+    border-radius: .3rem;
+    color: var(--caribbeancurrent);
   }
-  button {
-    background-color: #f9f9f9;
+
+  .secondaryBtn:hover {
+    background-image: linear-gradient(var(--azure), var(--azure));
   }
+  
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    color: #ffffff;
-    background-color: #213547;
+    color: var(--azure);
+    background-color: var(--night);
+  }
+
+  .secondaryBtn {
+    background-image: linear-gradient(var(--azure), var(--lightblue2));
+    border: 1px solid var(--caribbeancurrent);
+    border-radius: .3rem;
+    color: var(--caribbeancurrent);
+  }
+
+  .secondaryBtn:hover {
+    background-image: linear-gradient(var(--azure), var(--azure));
   }
 }

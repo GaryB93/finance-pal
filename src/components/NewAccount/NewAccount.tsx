@@ -48,7 +48,7 @@ const NewAccount = () => {
 
       <button type='submit'>Create Account</button>
       <span>or</span>
-      <Link to={''}>Back to Login</Link>
+      <Link to={'/'}>Back to Login</Link>
     </form>
   )
 };
