@@ -15,12 +15,16 @@ const Login = () => {
     <form id='login' onSubmit={handleLogin}>
       <h1>FinancePal</h1>
       <label htmlFor='username'>Username</label>
-      <input name='username' type='text' value={username} required
+      <input id='username' type='text' value={username} required
           onChange={(e) => {setUsername(e.target.value)}}/>
 
       <label htmlFor='password'>Password</label>
-      <input name='password' type='password' value={password} required
+      <input id='password' type='password' value={password} required
         onChange={(e) => {setPassword(e.target.value)}}/>
+
+      <p>
+        <Link to={'new_password'}>Forgot Password?</Link>
+      </p>
 
       {invalidMsg &&
         <p className='error-message'>
@@ -30,11 +34,9 @@ const Login = () => {
 
       <button type='submit' className='primaryBtn'>Login</button>
 
-      <span>or</span>
-
-      <Link to={'new_account'}>Create Account</Link>
-      <Link to={'new_password'}>Forgot Password?</Link>
-
+      <p>
+        Not a member? <Link to={'new_account'}>Sign up</Link>
+      </p>
     </form>
   );
 };

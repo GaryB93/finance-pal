@@ -1,0 +1,37 @@
+#signup {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  text-align: center;
+  height: 100vh;
+  max-width: 425px;
+}
+
+#signup label {
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+
+#password-validator, #password-message {
+  text-align: left;
+  font-size: .8rem;
+  margin: 0;
+  padding: .2rem;
+}
+
+#password-validator svg, #password-message svg {
+  margin-left: 5px;
+}
+
+#signup button {
+  margin: 2rem 0;
+}
+
+#signup input:nth-of-type(4) {
+  margin-bottom: 1rem;
+}
+
+#signup a {
+  align-self: center;
+  color: var(--link);
+}

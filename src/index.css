@@ -20,7 +20,13 @@
   --gunmetal: #17333A;
   --richblack: #0B191D;
   --night: #060D0F;
-  
+
+  /*error messages*/
+  --red: #FF7070;
+  --darkred: #A30000;
+
+  /*links*/
+  --link: #1C77C3;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -44,7 +50,7 @@ h1 {
   line-height: 1.1;
 }
 
-input, button {
+input, button, select {
   box-sizing: border-box;
   padding: 0.5rem;
   font-size: 1rem;
@@ -69,10 +75,21 @@ button {
   background-color: var(--);
 }
 
+.error-message {
+  background-color: var(--red);
+  border: 1px solid var(--darkred);
+  border-radius: .3rem;
+  padding: .5rem;
+  color: var(--darkred);
+  margin: .2rem 0;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
-    color: var(--gunmetal);
-    background-color: var(--aliceblue);
+    --text: var(--gunmetal);
+    --bg: var(--aliceblue);
+    color: var(--text);
+    background-color: var(--bg);
   }
 
   .secondaryBtn {
@@ -90,8 +107,10 @@ button {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    color: var(--azure);
-    background-color: var(--night);
+    --text: var(--azure);
+    --bg: var(--night);
+    color: var(--text);
+    background-color: var(--bg);
   }
 
   .secondaryBtn {

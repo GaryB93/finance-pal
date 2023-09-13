@@ -1,10 +1,11 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import Login from './Login';
 
-describe('Login component', () => {
+describe('Login form', () => {
 
   beforeEach(() => {
-    render(<Login />);
+    render(<MemoryRouter><Login/></MemoryRouter>);
   });
 
   test('input field with username label renders empty', () => {
@@ -39,19 +40,12 @@ describe('Login component', () => {
   });
 
   test('renders a link for users who need to create an account', () => {
-    const newAcct = screen.getByRole('link', { name: 'Create Account' });
+    const newAcct = screen.getByRole('link', { name: 'Sign up' });
     expect(newAcct).toBeVisible();
   });
 
   test('renders a login button', () => {
-    const loginBtn = screen.getByRole('button');
-    expect(loginBtn).toHaveAccessibleName();
+    const loginBtn = screen.getByRole('button', {name: 'Login'});
+    expect(loginBtn).toBeVisible();
   });
-
-  test.skip('test submit button ', () => {
-    const loginBtn = screen.getByRole('button');
-    fireEvent.click(loginBtn);
-
-  });
-
 });
