@@ -3,6 +3,12 @@ import { MemoryRouter } from 'react-router-dom';
 import NewAccount from './NewAccount';
 
 describe('NewAccount form', () => {
+  const defaultOption = '-- select an option --';
+  const options = [
+    "What is your mother's maiden name?",
+    "What is the name of your first pet?",
+    "What was the make and model of your first car?",
+  ];
 
   beforeEach(() => {
     render(<MemoryRouter><NewAccount/></MemoryRouter>);
@@ -10,7 +16,6 @@ describe('NewAccount form', () => {
 
   test('input field with username label renders empty', () => {
     const usernameInput = screen.getByLabelText('Username');
-    expect(usernameInput).toBeInTheDocument();
     expect(usernameInput).toHaveValue('');
   });
 
@@ -23,7 +28,6 @@ describe('NewAccount form', () => {
 
   test('input field with password label renders empty', () => {
     const passwordInput = screen.getByLabelText('Password');
-    expect(passwordInput).toBeInTheDocument();
     expect(passwordInput).toHaveValue('');
   });
 
@@ -36,7 +40,6 @@ describe('NewAccount form', () => {
 
   test('input field with confirm password label renders empty', () => {
     const confirmPassword = screen.getByLabelText('Confirm Password');
-    expect(confirmPassword).toBeInTheDocument();
     expect(confirmPassword).toHaveValue('');
   });
 
@@ -47,19 +50,27 @@ describe('NewAccount form', () => {
     expect(confirmPassword).toHaveValue(newInput);
   });
 
-  test('select field renders with security questions label renders', () => {
+  test('select field renders with security questions label renders with default option', () => {
     const question = screen.getByLabelText('Security Question');
-    expect(question).toBeInTheDocument();
-    expect(question).toHaveValue('-- select an option --');
+    expect(question).toHaveValue(defaultOption);
   });
 
-  test.skip('user input changes value of security question select', () => {
+  test('select field renders with correct number of options', () => {
+    const questions = screen.getAllByRole('option');
+    expect(questions.length).toBe(options.length + 1);
+  })
 
+  test('user input changes value of security question select field', () => {
+    const question = screen.getByRole('combobox', {name: 'Security Question'});
+    fireEvent.change(question, {target: {value: options[2]}});
+    const option = (screen.getByRole('option', {name: options[2]})) as HTMLOptionElement;
+    expect(option.selected).toBeTruthy();
+    const notSelectedOption = (screen.getByRole('option', {name: options[1]})) as HTMLOptionElement;
+    expect(notSelectedOption.selected).toBeFalsy();
   });
 
   test('input field with answer label renders empty', () => {
     const answer = screen.getByLabelText('Answer');
-    expect(answer).toBeInTheDocument();
     expect(answer).toHaveValue('');
   });
 

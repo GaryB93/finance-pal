@@ -6,30 +6,32 @@ import { IconContext } from 'react-icons';
 import './NewAccount.css';
 
 const NewAccount = (): JSX.Element => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
-
-  const [passwordTooltip, setPasswordTooltip] = useState(false);
-  const [password2Tooltip, setPassword2Tooltip] = useState(false);
-  const [passwordsMatch, setPasswordsMatch] = useState(true);
-  const [usernameTaken, setUsernameTaken] = useState(false);
-  const [hasQuestion, setHasQuestion] = useState(true);
-
-  const [has8Chars, setHas8Chars] = useState(false);
-  const [hasUppercase, setHasUppercase] = useState(false);
-  const [hasNum, setHasNum] = useState(false);
-
-  const passwordRef = useRef(null);
-
-  const questions = [
-    "-- select an option --",
+  const defaultOption = '-- select an option --'
+  const options = [
     "What is your mother's maiden name?",
     "What is the name of your first pet?",
     "What was the make and model of your first car?",
   ];
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [question, setQuestion] = useState(defaultOption);
+  const [answer, setAnswer] = useState('');
+
+  const [passwordTooltip, setPasswordTooltip] = useState(false);
+  const [has8Chars, setHas8Chars] = useState(false);
+  const [hasUppercase, setHasUppercase] = useState(false);
+  const [hasNum, setHasNum] = useState(false);
+
+  const [password2Tooltip, setPassword2Tooltip] = useState(false);
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
+
+  const [usernameTaken, setUsernameTaken] = useState(false);
+  const [hasQuestion, setHasQuestion] = useState(true);
+
+  const passInvalidRef = useRef<HTMLInputElement>(null);
+  const passNoMatchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setHas8Chars(password.length >= 8 ? true : false);
@@ -44,10 +46,21 @@ const NewAccount = (): JSX.Element => {
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
     if(!has8Chars || !hasUppercase || !hasNum) {
-      passwordRef.current.focus();
+      if (passInvalidRef.current !== null) {
+        passInvalidRef.current.focus();
+        return;
+      }
+    } else if(!passwordsMatch) {
+      if (passNoMatchRef.current !== null) {
+        passNoMatchRef.current.focus();
+        return;
+      }
+    } else if(question === defaultOption) {
+        setHasQuestion(false);
+        return;
+    } else {
+      setUsernameTaken(true);
     }
-    setUsernameTaken(true);
-    setHasQuestion(false);
   };
 
   return (
@@ -56,15 +69,17 @@ const NewAccount = (): JSX.Element => {
       <label htmlFor='username'>Username</label>
       <input id='username' type='text'
         value={username} required
-        onChange={(e)=>{setUsername(e.target.value)}}/>
+        onChange={(e)=>{setUsername(e.target.value)}}
+      />
       
       <label htmlFor='password'>Password</label>
       <input id='password' type='password'
         value={password} required
-        ref={passwordRef}
+        ref={passInvalidRef}
         onFocus={() => setPasswordTooltip(true)}
         onBlur={() => setPasswordTooltip(false)}
-        onChange={(e)=>{setPassword(e.target.value)}}/>
+        onChange={(e)=>{setPassword(e.target.value)}}
+      />
 
       {passwordTooltip &&
         <p id='password-validator'>
@@ -104,9 +119,11 @@ const NewAccount = (): JSX.Element => {
       <label htmlFor='confirmPassword'>Confirm Password</label>
       <input id='confirmPassword' type='password'
         value={confirmPassword} required
+        ref={passNoMatchRef}
         onFocus={() => setPassword2Tooltip(true)}
         onBlur={() => setPassword2Tooltip(false)}
-        onChange={(e)=>{setConfirmPassword(e.target.value)}}/>
+        onChange={(e)=>{setConfirmPassword(e.target.value)}}
+      />
 
       {password2Tooltip &&
         <p id='password-message'>
@@ -126,10 +143,12 @@ const NewAccount = (): JSX.Element => {
       <label htmlFor='securityQuestion'>Security Question</label>
       <select id='securityQuestion' value={question}
         onChange={(e)=>{setQuestion(e.target.value)}}>
-        <option value={questions[0]}>{questions[0]}</option>
-        <option value={questions[1]}>{questions[1]}</option>
-        <option value={questions[2]}>{questions[2]}</option>
-        <option value={questions[3]}>{questions[3]}</option>
+        <option value={defaultOption}>{defaultOption}</option>
+        {options.map((question, idx) => 
+          <option key={idx} value={question}>
+            {question}
+          </option>
+        )}
       </select>
 
       <label htmlFor='securityAnswer'>Answer</label>

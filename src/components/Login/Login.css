@@ -14,7 +14,7 @@
 
 #login p:nth-of-type(1) {
   text-align: left;
-  margin: .5rem 0 0 0;
+  margin: .5rem 0;
 }
 
 #login button {
