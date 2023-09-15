@@ -1,0 +1,21 @@
+#security-question {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  text-align: center;
+  height: 100vh;
+  max-width: 425px;
+}
+
+#security-question label {
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+
+#security-question button {
+  margin: 2rem 0;
+}
+
+#security-question a {
+  color: var(--link);
+}

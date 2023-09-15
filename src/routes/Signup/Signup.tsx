@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { FaCheck } from 'react-icons/fa';
-import { CgClose } from 'react-icons/cg';
+import { CgCloseO } from 'react-icons/cg';
 import { IconContext } from 'react-icons';
-import './NewAccount.css';
+import './Signup.css';
 
-const NewAccount = (): JSX.Element => {
+const Signup = (): JSX.Element => {
   const defaultOption = '-- select an option --'
   const options = [
     "What is your mother's maiden name?",
@@ -33,12 +33,14 @@ const NewAccount = (): JSX.Element => {
   const passInvalidRef = useRef<HTMLInputElement>(null);
   const passNoMatchRef = useRef<HTMLInputElement>(null);
 
+  // check for valid password entered
   useEffect(() => {
     setHas8Chars(password.length >= 8 ? true : false);
     setHasUppercase(/[A-Z]/.test(password) ? true : false);
     setHasNum(/\d/.test(password) ? true : false);
   }, [password]);
 
+  // check if passwords match
   useEffect(() => {
     setPasswordsMatch(password === confirmPassword ? true : false);
   },[password, confirmPassword]);
@@ -59,7 +61,7 @@ const NewAccount = (): JSX.Element => {
         setHasQuestion(false);
         return;
     } else {
-      setUsernameTaken(true);
+      console.log('do stuff here');
     }
   };
 
@@ -67,14 +69,12 @@ const NewAccount = (): JSX.Element => {
     <form id='signup' onSubmit={handleSignup}>
       <h1>Sign up</h1>
       <label htmlFor='username'>Username</label>
-      <input id='username' type='text'
-        value={username} required
+      <input id='username' type='text' value={username} required
         onChange={(e)=>{setUsername(e.target.value)}}
       />
       
       <label htmlFor='password'>Password</label>
-      <input id='password' type='password'
-        value={password} required
+      <input id='password' type='password' value={password} required
         ref={passInvalidRef}
         onFocus={() => setPasswordTooltip(true)}
         onBlur={() => setPasswordTooltip(false)}
@@ -82,43 +82,42 @@ const NewAccount = (): JSX.Element => {
       />
 
       {passwordTooltip &&
-        <p id='password-validator'>
-          Password must contain at least 8 characters 
+        <p id='password-validator' data-testid='tooltip1'>
+          <span>Password must contain at least 8 characters</span>
           {has8Chars ?
             <IconContext.Provider value={{color: 'green'}}>
               <FaCheck/>  
             </IconContext.Provider>
             :
             <IconContext.Provider value={{color: 'red'}}>
-              <CgClose/>  
+              <CgCloseO/>  
             </IconContext.Provider>
           }<br/>
-          Password must contain an uppercase letter
+          <span>Password must contain an uppercase letter</span>
           {hasUppercase ?
             <IconContext.Provider value={{color: 'green'}}>
               <FaCheck/>  
             </IconContext.Provider>
             :
             <IconContext.Provider value={{color: 'red'}}>
-              <CgClose/>  
+              <CgCloseO/>  
             </IconContext.Provider>
           }<br/>
-          Password must contain a number
+          <span>Password must contain a number</span>
           {hasNum ?
             <IconContext.Provider value={{color: 'green'}}>
               <FaCheck/>  
             </IconContext.Provider>
             :
             <IconContext.Provider value={{color: 'red'}}>
-              <CgClose/>  
+              <CgCloseO/>  
             </IconContext.Provider>
           }<br/>
         </p>
       }
 
       <label htmlFor='confirmPassword'>Confirm Password</label>
-      <input id='confirmPassword' type='password'
-        value={confirmPassword} required
+      <input id='confirmPassword' type='password' value={confirmPassword} required
         ref={passNoMatchRef}
         onFocus={() => setPassword2Tooltip(true)}
         onBlur={() => setPassword2Tooltip(false)}
@@ -126,15 +125,15 @@ const NewAccount = (): JSX.Element => {
       />
 
       {password2Tooltip &&
-        <p id='password-message'>
-          Passwords {!passwordsMatch && <span>do not</span>} match
+        <p id='password-message' data-testid='tooltip2'>
+          <span>Passwords {!passwordsMatch && <span>do not</span>} match</span>
           {passwordsMatch ?
             <IconContext.Provider value={{ color: 'green'}}>
               <FaCheck/>
             </IconContext.Provider>
             :
             <IconContext.Provider value={{ color: 'red'}}>
-              <CgClose/>
+              <CgCloseO/>
             </IconContext.Provider>
           }
         </p>
@@ -152,8 +151,7 @@ const NewAccount = (): JSX.Element => {
       </select>
 
       <label htmlFor='securityAnswer'>Answer</label>
-      <input id='securityAnswer' type='text'
-        value={answer} required
+      <input id='securityAnswer' type='text' value={answer} required
         onChange={(e)=>{setAnswer(e.target.value)}}/>
 
       { usernameTaken &&
@@ -177,4 +175,4 @@ const NewAccount = (): JSX.Element => {
   )
 };
 
-export default NewAccount;
+export default Signup;

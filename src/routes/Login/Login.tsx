@@ -5,10 +5,10 @@ import './login.css';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [invalidMsg, setInvalidMsg] = useState(false);
+  const [invalidUser, setInvalidUser] = useState(false);
 
   const handleLogin = () => {
-    setInvalidMsg(!invalidMsg);
+    
   };
 
   return (
@@ -16,17 +16,17 @@ const Login = () => {
       <h1>FinancePal</h1>
       <label htmlFor='username'>Username</label>
       <input id='username' type='text' value={username} required
-          onChange={(e) => {setUsername(e.target.value)}}/>
+          onChange={(e)=>{setUsername(e.target.value)}}/>
 
       <label htmlFor='password'>Password</label>
       <input id='password' type='password' value={password} required
-        onChange={(e) => {setPassword(e.target.value)}}/>
+        onChange={(e)=>{setPassword(e.target.value)}}/>
 
       <p>
-        <Link to={'new_password'}>Forgot Password?</Link>
+        <Link to={'request_password'}>Forgot Password?</Link>
       </p>
 
-      {invalidMsg &&
+      {invalidUser &&
         <p className='error-message'>
           The username or password you entered is incorrect
         </p>
@@ -35,7 +35,7 @@ const Login = () => {
       <button type='submit' className='primaryBtn'>Login</button>
 
       <p>
-        Not a member? <Link to={'new_account'}>Sign up</Link>
+        Not a member? <Link to={'signup'}>Sign up</Link>
       </p>
     </form>
   );

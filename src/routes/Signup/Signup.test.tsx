@@ -1,8 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import NewAccount from './NewAccount';
+import { act } from 'react-dom/test-utils';
+import Signup from './Signup';
 
-describe('NewAccount form', () => {
+describe('Signup form', () => {
   const defaultOption = '-- select an option --';
   const options = [
     "What is your mother's maiden name?",
@@ -11,7 +12,7 @@ describe('NewAccount form', () => {
   ];
 
   beforeEach(() => {
-    render(<MemoryRouter><NewAccount/></MemoryRouter>);
+    render(<MemoryRouter><Signup/></MemoryRouter>);
   });
 
   test('input field with username label renders empty', () => {
@@ -31,6 +32,15 @@ describe('NewAccount form', () => {
     expect(passwordInput).toHaveValue('');
   });
 
+  test('user focusing on password input field should display tooltip', () => {
+    const passwordInput = screen.getByLabelText('Password');
+    act(() => {
+      passwordInput.focus();
+    });
+    const tooltip = screen.getByTestId('tooltip1');
+    expect(tooltip).toBeVisible();
+  });
+
   test('user input changes value of password input field', () => {
     const passwordInput = screen.getByLabelText('Password');
     const newInput = 'myPassword';
@@ -41,6 +51,15 @@ describe('NewAccount form', () => {
   test('input field with confirm password label renders empty', () => {
     const confirmPassword = screen.getByLabelText('Confirm Password');
     expect(confirmPassword).toHaveValue('');
+  });
+
+  test('user focusing on confirm password input field should display tooltip', () => {
+    const confirmPassword = screen.getByLabelText('Confirm Password');
+    act(() => {
+      confirmPassword.focus();
+    });
+    const tooltip = screen.getByTestId('tooltip2');
+    expect(tooltip).toBeVisible();
   });
 
   test('user input changes value of confirm password input field', () => {

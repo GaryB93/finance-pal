@@ -54,6 +54,7 @@ input, button, select {
   box-sizing: border-box;
   padding: 0.5rem;
   font-size: 1rem;
+  /* border-radius: .3rem; */
 }
 
 button {
@@ -81,7 +82,7 @@ button {
   border-radius: .3rem;
   padding: .5rem;
   color: var(--darkred);
-  margin: .2rem 0;
+  margin: .5rem 0;
 }
 
 @media (prefers-color-scheme: light) {
