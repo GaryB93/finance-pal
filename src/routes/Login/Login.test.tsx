@@ -10,7 +10,6 @@ describe('Login form', () => {
 
   test('input field with username label renders empty', () => {
     const usernameInput = screen.getByLabelText('Username');
-    expect(usernameInput).toBeInTheDocument();
     expect(usernameInput).toHaveValue('');
   });
 
@@ -23,7 +22,6 @@ describe('Login form', () => {
 
   test('input field with password label renders empty', () => {
     const passwordInput = screen.getByLabelText('Password');
-    expect(passwordInput).toBeInTheDocument();
     expect(passwordInput).toHaveValue('');
   });
 

@@ -67,7 +67,7 @@ const Signup = (): JSX.Element => {
 
   return (
     <form id='signup' onSubmit={handleSignup}>
-      <h1>Sign up</h1>
+      <h1>FinancePal</h1>
       <label htmlFor='username'>Username</label>
       <input id='username' type='text' value={username} required
         onChange={(e)=>{setUsername(e.target.value)}}
@@ -82,7 +82,7 @@ const Signup = (): JSX.Element => {
       />
 
       {passwordTooltip &&
-        <p id='password-validator' data-testid='tooltip1'>
+        <p id='password-validator' data-testid='valid-password'>
           <span>Password must contain at least 8 characters</span>
           {has8Chars ?
             <IconContext.Provider value={{color: 'green'}}>
@@ -124,8 +124,8 @@ const Signup = (): JSX.Element => {
         onChange={(e)=>{setConfirmPassword(e.target.value)}}
       />
 
-      {password2Tooltip &&
-        <p id='password-message' data-testid='tooltip2'>
+      {(password2Tooltip && confirmPassword !== '') &&
+        <p id='password-message' data-testid='password-match'>
           <span>Passwords {!passwordsMatch && <span>do not</span>} match</span>
           {passwordsMatch ?
             <IconContext.Provider value={{ color: 'green'}}>

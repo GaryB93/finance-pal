@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './SecurityQuestion.css';
 
-const SecurityQuestion = () => {
+const SecurityQuestion = (): JSX.Element => {
   const [answer, setAnswer] = useState('');
   const [inValidAnswer, setInValidAnswer] = useState(false);
 
   const {state} = useLocation();
   const [question, validAnswer] = state;
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,6 +17,7 @@ const SecurityQuestion = () => {
       setInValidAnswer(true);
       return;
     }
+    navigate('/new_password');
   };
 
   return (

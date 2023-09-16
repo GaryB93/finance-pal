@@ -7,6 +7,7 @@ import Login from './routes/Login';
 import Signup from './routes/Signup';
 import RequestPassword from './routes/RequestPassword';
 import SecurityQuestion from './routes/SecurityQuestion';
+import NewPassword from './routes/NewPassword';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: 'security_question',
     element: <SecurityQuestion/>
+  },
+  {
+    path: 'new_password',
+    element: <NewPassword/>
   }
 ]);
 
