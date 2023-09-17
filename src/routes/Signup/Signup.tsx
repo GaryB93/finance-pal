@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { FaCheck } from 'react-icons/fa';
-import { CgCloseO } from 'react-icons/cg';
 import { IconContext } from 'react-icons';
 import './Signup.css';
 
@@ -22,6 +21,7 @@ const Signup = (): JSX.Element => {
   const [passwordTooltip, setPasswordTooltip] = useState(false);
   const [has8Chars, setHas8Chars] = useState(false);
   const [hasUppercase, setHasUppercase] = useState(false);
+  const [hasLowercase, setHasLowercase] = useState(false);
   const [hasNum, setHasNum] = useState(false);
 
   const [password2Tooltip, setPassword2Tooltip] = useState(false);
@@ -37,6 +37,7 @@ const Signup = (): JSX.Element => {
   useEffect(() => {
     setHas8Chars(password.length >= 8 ? true : false);
     setHasUppercase(/[A-Z]/.test(password) ? true : false);
+    setHasLowercase(/[a-z]/.test(password) ? true : false);
     setHasNum(/\d/.test(password) ? true : false);
   }, [password]);
 
@@ -47,7 +48,7 @@ const Signup = (): JSX.Element => {
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
-    if(!has8Chars || !hasUppercase || !hasNum) {
+    if(!has8Chars || !hasUppercase || !hasLowercase || !hasNum) {
       if (passInvalidRef.current !== null) {
         passInvalidRef.current.focus();
         return;
@@ -83,36 +84,49 @@ const Signup = (): JSX.Element => {
 
       {passwordTooltip &&
         <p id='password-validator' data-testid='valid-password'>
-          <span>Password must contain at least 8 characters</span>
-          {has8Chars ?
-            <IconContext.Provider value={{color: 'green'}}>
-              <FaCheck/>  
-            </IconContext.Provider>
-            :
-            <IconContext.Provider value={{color: 'red'}}>
-              <CgCloseO/>  
-            </IconContext.Provider>
-          }<br/>
-          <span>Password must contain an uppercase letter</span>
           {hasUppercase ?
             <IconContext.Provider value={{color: 'green'}}>
               <FaCheck/>  
             </IconContext.Provider>
             :
-            <IconContext.Provider value={{color: 'red'}}>
-              <CgCloseO/>  
+            <IconContext.Provider value={{color: 'gray'}}>
+              <FaCheck/>  
             </IconContext.Provider>
-          }<br/>
-          <span>Password must contain a number</span>
+          }
+          <span>Uppercase</span><br/>
+
+          {hasLowercase ?
+            <IconContext.Provider value={{color: 'green'}}>
+              <FaCheck/>  
+            </IconContext.Provider>
+            :
+            <IconContext.Provider value={{color: 'gray'}}>
+              <FaCheck/>  
+            </IconContext.Provider>
+          }
+          <span>Lowercase</span><br/>
+          
           {hasNum ?
             <IconContext.Provider value={{color: 'green'}}>
               <FaCheck/>  
             </IconContext.Provider>
             :
-            <IconContext.Provider value={{color: 'red'}}>
-              <CgCloseO/>  
+            <IconContext.Provider value={{color: 'gray'}}>
+              <FaCheck/>  
             </IconContext.Provider>
-          }<br/>
+          }
+          <span>Number</span><br/>
+
+          {has8Chars ?
+            <IconContext.Provider value={{color: 'green'}}>
+              <FaCheck/>  
+            </IconContext.Provider>
+            :
+            <IconContext.Provider value={{color: 'gray'}}>
+              <FaCheck/>  
+            </IconContext.Provider>
+          }
+          <span>8+ characters</span><br/>
         </p>
       }
 
@@ -126,16 +140,16 @@ const Signup = (): JSX.Element => {
 
       {(password2Tooltip && confirmPassword !== '') &&
         <p id='password-message' data-testid='password-match'>
-          <span>Passwords {!passwordsMatch && <span>do not</span>} match</span>
           {passwordsMatch ?
             <IconContext.Provider value={{ color: 'green'}}>
               <FaCheck/>
             </IconContext.Provider>
             :
-            <IconContext.Provider value={{ color: 'red'}}>
-              <CgCloseO/>
+            <IconContext.Provider value={{ color: 'gray'}}>
+              <FaCheck/>
             </IconContext.Provider>
           }
+          <span>Passwords must match</span>
         </p>
       }
       
