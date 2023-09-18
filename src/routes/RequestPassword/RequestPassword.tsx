@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './RequestPassword.css';
 
 const RequestPassword = () => {
   const [username, setUsername] = useState('');
@@ -18,7 +17,7 @@ const RequestPassword = () => {
   };
 
   return (
-    <form id='request-password' onSubmit={handleRequest}>
+    <form className='login' onSubmit={handleRequest}>
       <h1>FinancePal</h1>
       <label htmlFor='username'>Username</label>
       <input type='text' id='username' value={username} required

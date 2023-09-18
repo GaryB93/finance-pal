@@ -22,7 +22,7 @@
   --night: #060D0F;
 
   /*error messages*/
-  --red: #FF7070;
+  --red: #ff8383;
   --darkred: #850A25;
 
   /*links*/
@@ -84,6 +84,37 @@ button {
   color: var(--darkred);
   margin: .5rem 0;
 }
+
+/* login forms */
+.login {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  text-align: center;
+  height: 100vh;
+  max-width: 425px;
+}
+
+.login label {
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+
+.login button {
+  margin: 2rem 0;
+}
+
+.login a {
+  color: var(--link);
+}
+
+
+@media screen and (min-width: 500px) {
+  .login {
+    margin: 0 auto;
+  }
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {

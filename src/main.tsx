@@ -1,4 +1,3 @@
-import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -8,6 +7,7 @@ import Signup from './routes/Signup';
 import RequestPassword from './routes/RequestPassword';
 import SecurityQuestion from './routes/SecurityQuestion';
 import NewPassword from './routes/NewPassword';
+import './index.css';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: 'new_password',
     element: <NewPassword/>
+  },
+  {
+    path: 'summary',
+
   }
 ]);
 

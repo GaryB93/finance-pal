@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { FaCheck } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
+import PasswordRequirements from '../../components/PasswordRequirements/PasswordRequirements';
 import './Signup.css';
 
 const Signup = (): JSX.Element => {
@@ -11,49 +12,35 @@ const Signup = (): JSX.Element => {
     "What is the name of your first pet?",
     "What was the make and model of your first car?",
   ];
-
+  
+  // form input fields
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [question, setQuestion] = useState(defaultOption);
   const [answer, setAnswer] = useState('');
 
-  const [passwordTooltip, setPasswordTooltip] = useState(false);
-  const [has8Chars, setHas8Chars] = useState(false);
-  const [hasUppercase, setHasUppercase] = useState(false);
-  const [hasLowercase, setHasLowercase] = useState(false);
-  const [hasNum, setHasNum] = useState(false);
+  // displays password tooltips
+  const [passwordReq, setPasswordReq] = useState(false);
+  const [passwordMatcher, setPasswordMatcher] = useState(false);
 
-  const [password2Tooltip, setPassword2Tooltip] = useState(false);
-  const [passwordsMatch, setPasswordsMatch] = useState(true);
-
+  // displays error messages
   const [usernameTaken, setUsernameTaken] = useState(false);
   const [hasQuestion, setHasQuestion] = useState(true);
 
+  // used to set focus to certain input fields
   const passInvalidRef = useRef<HTMLInputElement>(null);
   const passNoMatchRef = useRef<HTMLInputElement>(null);
 
-  // check for valid password entered
-  useEffect(() => {
-    setHas8Chars(password.length >= 8 ? true : false);
-    setHasUppercase(/[A-Z]/.test(password) ? true : false);
-    setHasLowercase(/[a-z]/.test(password) ? true : false);
-    setHasNum(/\d/.test(password) ? true : false);
-  }, [password]);
-
-  // check if passwords match
-  useEffect(() => {
-    setPasswordsMatch(password === confirmPassword ? true : false);
-  },[password, confirmPassword]);
-
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
-    if(!has8Chars || !hasUppercase || !hasLowercase || !hasNum) {
-      if (passInvalidRef.current !== null) {
-        passInvalidRef.current.focus();
-        return;
-      }
-    } else if(!passwordsMatch) {
+    if(!/[A-Z]/.test(password) || !/[a-z]/.test(password) ||
+       !/\d/.test(password) || password.length < 8) {
+          if (passInvalidRef.current !== null) {
+            passInvalidRef.current.focus();
+            return;
+          }
+    } else if(password !== confirmPassword) {
       if (passNoMatchRef.current !== null) {
         passNoMatchRef.current.focus();
         return;
@@ -62,85 +49,53 @@ const Signup = (): JSX.Element => {
         setHasQuestion(false);
         return;
     } else {
-      console.log('do stuff here');
+      setUsernameTaken(true);
     }
   };
 
   return (
-    <form id='signup' onSubmit={handleSignup}>
+    <form className='login' onSubmit={handleSignup}>
       <h1>FinancePal</h1>
       <label htmlFor='username'>Username</label>
-      <input id='username' type='text' value={username} required
+      <input id='username'
+        type='text'
+        value={username}
+        required
         onChange={(e)=>{setUsername(e.target.value)}}
       />
+
+      { usernameTaken &&
+        <p className='error-message'>
+          Sorry, that username is already taken
+        </p> }
       
       <label htmlFor='password'>Password</label>
-      <input id='password' type='password' value={password} required
-        ref={passInvalidRef}
-        onFocus={() => setPasswordTooltip(true)}
-        onBlur={() => setPasswordTooltip(false)}
+      <input id='password'
+        type='password'
+        value={password}
+        required
         onChange={(e)=>{setPassword(e.target.value)}}
+        onFocus={()=>setPasswordReq(true)}
+        onBlur={()=>setPasswordReq(false)}
+        ref={passInvalidRef}
       />
 
-      {passwordTooltip &&
-        <p id='password-validator' data-testid='valid-password'>
-          {hasUppercase ?
-            <IconContext.Provider value={{color: 'green'}}>
-              <FaCheck/>  
-            </IconContext.Provider>
-            :
-            <IconContext.Provider value={{color: 'gray'}}>
-              <FaCheck/>  
-            </IconContext.Provider>
-          }
-          <span>Uppercase</span><br/>
+      { passwordReq && <PasswordRequirements password={password}/> }
 
-          {hasLowercase ?
-            <IconContext.Provider value={{color: 'green'}}>
-              <FaCheck/>  
-            </IconContext.Provider>
-            :
-            <IconContext.Provider value={{color: 'gray'}}>
-              <FaCheck/>  
-            </IconContext.Provider>
-          }
-          <span>Lowercase</span><br/>
-          
-          {hasNum ?
-            <IconContext.Provider value={{color: 'green'}}>
-              <FaCheck/>  
-            </IconContext.Provider>
-            :
-            <IconContext.Provider value={{color: 'gray'}}>
-              <FaCheck/>  
-            </IconContext.Provider>
-          }
-          <span>Number</span><br/>
-
-          {has8Chars ?
-            <IconContext.Provider value={{color: 'green'}}>
-              <FaCheck/>  
-            </IconContext.Provider>
-            :
-            <IconContext.Provider value={{color: 'gray'}}>
-              <FaCheck/>  
-            </IconContext.Provider>
-          }
-          <span>8+ characters</span><br/>
-        </p>
-      }
-
-      <label htmlFor='confirmPassword'>Confirm Password</label>
-      <input id='confirmPassword' type='password' value={confirmPassword} required
-        ref={passNoMatchRef}
-        onFocus={() => setPassword2Tooltip(true)}
-        onBlur={() => setPassword2Tooltip(false)}
+      <label htmlFor='confirm-password'>Confirm Password</label>
+      <input id='confirm-password'
+        type='password'
+        value={confirmPassword}
+        required
         onChange={(e)=>{setConfirmPassword(e.target.value)}}
+        onFocus={() => setPasswordMatcher(true)}
+        onBlur={() => setPasswordMatcher(false)}
+        ref={passNoMatchRef}
       />
 
-      {(password2Tooltip && confirmPassword !== '') &&
-        <p id='password-message' data-testid='password-match'>
-          {passwordsMatch ?
+      {(passwordMatcher && confirmPassword !== '') &&
+        <div id='password-match' data-testid='password-match'>
+          {password === confirmPassword ?
             <IconContext.Provider value={{ color: 'green'}}>
               <FaCheck/>
             </IconContext.Provider>
@@ -150,35 +105,34 @@ const Signup = (): JSX.Element => {
             </IconContext.Provider>
           }
           <span>Passwords must match</span>
-        </p>
+        </div>
       }
       
-      <label htmlFor='securityQuestion'>Security Question</label>
-      <select id='securityQuestion' value={question}
+      <label htmlFor='security-question'>Security Question</label>
+      <select id='security-question'
+        value={question}
         onChange={(e)=>{setQuestion(e.target.value)}}>
-        <option value={defaultOption}>{defaultOption}</option>
-        {options.map((question, idx) => 
-          <option key={idx} value={question}>
-            {question}
-          </option>
-        )}
+          <option value={defaultOption}>{defaultOption}</option>
+          {options.map((question, idx) => 
+            <option key={idx} value={question}>
+              {question}
+            </option>
+          )}
       </select>
-
-      <label htmlFor='securityAnswer'>Answer</label>
-      <input id='securityAnswer' type='text' value={answer} required
-        onChange={(e)=>{setAnswer(e.target.value)}}/>
-
-      { usernameTaken &&
-        <p className='error-message'>
-          Sorry, that username is already taken
-        </p>
-      }
 
       { !hasQuestion &&
         <p className='error-message'>
           Please select a security question
         </p>
       }
+
+      <label htmlFor='securityAnswer'>Answer</label>
+      <input id='securityAnswer'
+        type='text'
+        value={answer}
+        required
+        onChange={(e)=>{setAnswer(e.target.value)}}
+      />
 
       <button type='submit' className='primaryBtn'>Sign up</button>
       

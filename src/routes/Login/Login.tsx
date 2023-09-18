@@ -7,22 +7,30 @@ const Login = (): JSX.Element => {
   const [password, setPassword] = useState('');
   const [invalidUser, setInvalidUser] = useState(false);
 
-  const handleLogin = () => {
-    
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
   };
 
   return (
-    <form id='login' onSubmit={handleLogin}>
+    <form className='login' onSubmit={handleLogin}>
       <h1>FinancePal</h1>
       <label htmlFor='username'>Username</label>
-      <input id='username' type='text' value={username} required
-        onChange={(e)=>{setUsername(e.target.value)}}/>
+      <input id='username'
+        type='text'
+        value={username}
+        required
+        onChange={(e)=>{setUsername(e.target.value)}}
+      />
 
       <label htmlFor='password'>Password</label>
-      <input id='password' type='password' value={password} required
-        onChange={(e)=>{setPassword(e.target.value)}}/>
+      <input id='password'
+        type='password'
+        value={password}
+        required
+        onChange={(e)=>{setPassword(e.target.value)}}
+      />
 
-      <p>
+      <p id='forgot-password'>
         <Link to={'request_password'}>Forgot Password?</Link>
       </p>
 

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import './SecurityQuestion.css';
 
 const SecurityQuestion = (): JSX.Element => {
   const [answer, setAnswer] = useState('');
@@ -21,7 +20,7 @@ const SecurityQuestion = (): JSX.Element => {
   };
 
   return (
-    <form id='security-question' onSubmit={handleSubmit}>
+    <form className='login' onSubmit={handleSubmit}>
       <h1>FinancePal</h1>
       <label htmlFor='question'>Security Question</label>
       <input type='textbox' id='question' value={question} readOnly/>
