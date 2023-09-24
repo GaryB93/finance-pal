@@ -4,7 +4,7 @@ import { FaCheck } from 'react-icons/fa';
 const PasswordRequirements = ({ password }: {password: string}): JSX.Element => {
 
   return (
-    <div id='password-requirements' data-testid='password-requirements'
+    <div id='password-requirements' role='alert'
       style={{
         textAlign: 'left',
         fontSize: '.8rem',

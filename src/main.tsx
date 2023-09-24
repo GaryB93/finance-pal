@@ -1,12 +1,16 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import ErrorPage from './routes/ErrorPage';
-import Login from './routes/Login';
-import Signup from './routes/Signup';
-import RequestPassword from './routes/RequestPassword';
-import SecurityQuestion from './routes/SecurityQuestion';
-import NewPassword from './routes/NewPassword';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import RequestPassword from './components/RequestPassword';
+import SecurityQuestion from './components/SecurityQuestion';
+import NewPassword from './components/NewPassword';
+import Summary from './components/Summary';
+import PrivateRoute from './components/PrivateRoute';
+import ErrorPage from './components/ErrorPage';
+import { setupStore } from './store';
 import './index.css';
 
 const router = createBrowserRouter([
@@ -25,20 +29,22 @@ const router = createBrowserRouter([
   },
   {
     path: 'security_question',
-    element: <SecurityQuestion/>
+    element: <PrivateRoute route={<SecurityQuestion/>}></PrivateRoute>
   },
   {
     path: 'new_password',
-    element: <NewPassword/>
+    element: <PrivateRoute route={<NewPassword/>}></PrivateRoute>
   },
   {
     path: 'summary',
-
+    element: <PrivateRoute route={<Summary/>}></PrivateRoute>
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <Provider store={setupStore()}>
+      <RouterProvider router={router}/>
+    </Provider>
   </React.StrictMode>,
 );

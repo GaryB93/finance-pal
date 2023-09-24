@@ -69,7 +69,7 @@ button {
 }
 
 .primaryBtn:hover {
-  background-color: var(--munsell);
+  background-image: linear-gradient(var(--lightblue2), var(--lightblue2));
 }
 
 .secondaryBtn:hover {
