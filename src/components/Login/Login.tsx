@@ -14,8 +14,13 @@ const Login = (): JSX.Element => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    // fetch to database to verify username and password
+    // if successful, update userID, username, loggedIn in state
+    // navigate to summary page
     dispatch(login({ userID: '123', username: username}));
     navigate('summary');
+    // if username doesn't match an existing account or the
+    // password is invalid, set error message
   };
 
   return (

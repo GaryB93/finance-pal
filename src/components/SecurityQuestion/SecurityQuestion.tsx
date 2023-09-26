@@ -5,8 +5,8 @@ const SecurityQuestion = (): JSX.Element => {
   const [answer, setAnswer] = useState('');
   const [inValidAnswer, setInValidAnswer] = useState(false);
 
-  const {state} = useLocation();
-  const [question, validAnswer] = state;
+  const { state } = useLocation();
+  const { question, validAnswer } = state;
 
   const navigate = useNavigate();
 
@@ -14,23 +14,33 @@ const SecurityQuestion = (): JSX.Element => {
     e.preventDefault();
     if (answer !== validAnswer) {
       setInValidAnswer(true);
-      return;
+    } else {
+      navigate('/new_password');
     }
-    navigate('/new_password');
   };
 
   return (
     <form className='login' onSubmit={handleSubmit}>
       <h1>FinancePal</h1>
       <label htmlFor='question'>Security Question</label>
-      <input type='textbox' id='question' value={question} readOnly/>
+      <input
+        id='question'
+        type='textbox'
+        value={question}
+        readOnly
+      />
 
       <label htmlFor='answer'>Answer</label>
-      <input type='textbox' id='answer' value={answer} required
-        onChange={(e)=>{setAnswer(e.target.value)}}/>
+      <input
+        id='answer'
+        type='textbox'
+        value={answer}
+        required
+        onChange={(e)=>{setAnswer(e.target.value)}}
+      />
 
       {inValidAnswer &&
-        <p className='error-message'>
+        <p className='error-message' role='alert'>
           The answer you provided is incorrect  
         </p>
       }

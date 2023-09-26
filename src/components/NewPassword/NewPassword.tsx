@@ -11,29 +11,28 @@ const NewPassword = (): JSX.Element => {
   
   // displays password tootips
   const [passwordReq, setPasswordReq] = useState(false);
-  const [passwordMatcher, setPasswordMatcher] = useState(false);
+  const [passwordMatch, setPasswordMatch] = useState(false);
 
   // used to set focus to certain input fields
-  const passInvalidRef = useRef<HTMLInputElement>(null);
-  const passNoMatchRef = useRef<HTMLInputElement>(null);
+  const passwordReqRef = useRef<HTMLInputElement>(null);
+  const passMatchRef = useRef<HTMLInputElement>(null);
 
-  const dispatch = useAppDispatch();
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
     if (!/[A-Z]/.test(password) ||
         !/[a-z]/.test(password) ||
         !/\d/.test(password) ||
         password.length < 8) {
-      if (passInvalidRef.current !== null) {
-        passInvalidRef.current.focus();
-        return;
+      if (passwordReqRef.current !== null) {
+        passwordReqRef.current.focus();
       }
     } else if (password !== confirmPassword) {
-        if (passNoMatchRef.current !== null) {
-          passNoMatchRef.current.focus();
+        if (passMatchRef.current !== null) {
+          passMatchRef.current.focus();
         }
-        return;
+    } else {
+      // update password in database and send user back to login page
+      // make sure to reset userID and username in state
     }
   };
 
@@ -48,7 +47,7 @@ const NewPassword = (): JSX.Element => {
         onChange={(e)=>{setPassword(e.target.value)}}
         onFocus={()=>{setPasswordReq(true)}}
         onBlur={()=>{setPasswordReq(false)}}
-        ref={passInvalidRef}
+        ref={passwordReqRef}
       />
 
       { passwordReq && <PasswordRequirements password={password}/> }
@@ -59,12 +58,12 @@ const NewPassword = (): JSX.Element => {
         value={confirmPassword}
         required
         onChange={(e)=>{setConfirmPassword(e.target.value)}} 
-        onFocus={()=>{setPasswordMatcher(true)}}
-        onBlur={()=>{setPasswordMatcher(false)}}
-        ref={passNoMatchRef}
+        onFocus={()=>{setPasswordMatch(true)}}
+        onBlur={()=>{setPasswordMatch(false)}}
+        ref={passMatchRef}
       />
 
-      {passwordMatcher &&
+      {passwordMatch &&
         <div id='password-match' role='alert'>
           {password === confirmPassword ?
             <IconContext.Provider value={{ color: 'green'}}>

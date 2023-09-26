@@ -45,17 +45,16 @@ const Signup = (): JSX.Element => {
         password.length < 8) {
       if (passInvalidRef.current !== null) {
         passInvalidRef.current.focus();
-        return;
       }
     } else if(password !== confirmPassword) {
       if (passNoMatchRef.current !== null) {
         passNoMatchRef.current.focus();
-        return;
       }
     } else if(question === options[0]) {
         setHasQuestion(false);
-        return;
     } else {
+      // set userID, username and loggedIn in state
+      // navigate to summary page
       dispatch(login({ userID: '111', username }));
       navigate('/summary');
     }
@@ -73,7 +72,7 @@ const Signup = (): JSX.Element => {
       />
 
       { usernameTaken &&
-        <p className='error-message'>
+        <p className='error-message' role='alert'>
           Sorry, that username is already taken
         </p> }
       
