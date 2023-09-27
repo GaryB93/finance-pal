@@ -2,25 +2,45 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { login } from '../../reducers/userReducer';
+import { ENDPOINTS } from '../../constants/endpoints';
+import axios from 'axios';
 import './login.css';
 
+interface Request {
+  username: string;
+  password: string;
+}
+
+interface Response {
+  userId: string;
+  username: string;
+}
+
 const Login = (): JSX.Element => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [invalidUser, setInvalidUser] = useState(false);
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [invalidUser, setInvalidUser] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // fetch to database to verify username and password
-    // if successful, update userID, username, loggedIn in state
-    // navigate to summary page
-    dispatch(login({ userID: '123', username: username}));
-    navigate('summary');
-    // if username doesn't match an existing account or the
-    // password is invalid, set error message
+    axios.post<Request, Response>(ENDPOINTS.USER_LOGIN, {
+      username,
+      password
+    })
+    .then((res) => {
+      if ((res.userId)) {
+        dispatch(login({ userID: res.userId, username: res.username}));
+        navigate('summary');
+      } else {
+        setInvalidUser(true);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    });
   };
 
   return (
