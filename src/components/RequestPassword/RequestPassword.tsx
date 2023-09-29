@@ -18,6 +18,7 @@ const RequestPassword = () => {
     // with security question and answer returned from db
     // set userID and username in state
     dispatch(verifyUser({ userID: '123', username: username }));
+    setUserNotFound(false);
     navigate('/security_question', {state: ['question', 'answer']});
   };
 

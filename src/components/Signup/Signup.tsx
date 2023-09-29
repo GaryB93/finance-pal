@@ -56,6 +56,7 @@ const Signup = (): JSX.Element => {
       // set userID, username and loggedIn in state
       // navigate to summary page
       dispatch(login({ userID: '111', username }));
+      setUsernameTaken(false);
       navigate('/summary');
     }
   };

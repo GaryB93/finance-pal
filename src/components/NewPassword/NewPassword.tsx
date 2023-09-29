@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { IconContext } from 'react-icons';
 import { FaCheck } from 'react-icons/fa';
-import { useAppDispatch } from '../../hooks';
+// import { useAppDispatch } from '../../hooks';
 import PasswordRequirements from '../PasswordRequirements/PasswordRequirements';
 
 const NewPassword = (): JSX.Element => {

@@ -1,17 +1,24 @@
 import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 
 import userRouter from './routes/user.js';
 
 dotenv.config();
-
 const port = process.env.PORT;
-
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(express.static('dist'));
+app.use(express.static('public'));
 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 
 app.use('/api/user', userRouter);
