@@ -2,11 +2,15 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
-
 import userRouter from './routes/user.js';
 
 dotenv.config();
-const port = process.env.PORT;
+
+let port = process.env.PORT;
+if (port === null || port === '' || port === undefined) {
+    port = 3000;
+}
+
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
