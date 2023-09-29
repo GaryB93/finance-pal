@@ -1,9 +1,9 @@
 import { createReducer, createAction } from '@reduxjs/toolkit';
 
 interface UserState {
-  userID?: string | undefined;
-  username?: string | undefined;
-  loggedIn?: boolean | undefined;
+  userID?: string;
+  username?: string;
+  loggedIn?: boolean;
 }
 
 const initialState: UserState = {

@@ -1,11 +1,11 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore, PreloadedState } from '@reduxjs/toolkit';
 import userReducer from './reducers/userReducer';
 
 const rootReducer = combineReducers({
   user: userReducer,
 })
 
-export const setupStore = (preloadedState?: RootState) => {
+export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
   return configureStore({
     reducer: rootReducer,
     preloadedState,
