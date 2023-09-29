@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../hooks';
 import { login } from '../../reducers/userReducer';
 import { ENDPOINTS } from '../../constants/endpoints';
 import axios from 'axios';
-import 'login.css';
+import './Login.css';
 
 interface Request {
   username: string;
