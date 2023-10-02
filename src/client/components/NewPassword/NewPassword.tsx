@@ -1,13 +1,19 @@
 import { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IconContext } from 'react-icons';
 import { FaCheck } from 'react-icons/fa';
-// import { useAppDispatch } from '../../hooks';
+import axios from 'axios';
 import PasswordRequirements from '../PasswordRequirements/PasswordRequirements';
+import { ENDPOINTS } from '../../constants/endpoints';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { logout } from '../../reducers/userReducer';
 
 const NewPassword = (): JSX.Element => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const userId = useAppSelector(state => state.user.userId);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   
   // displays password tootips
   const [passwordReq, setPasswordReq] = useState(false);
@@ -17,8 +23,9 @@ const NewPassword = (): JSX.Element => {
   const passwordReqRef = useRef<HTMLInputElement>(null);
   const passMatchRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (e: React.FormEvent): void => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const controller = new AbortController();
     if (!/[A-Z]/.test(password) ||
         !/[a-z]/.test(password) ||
         !/\d/.test(password) ||
@@ -31,9 +38,30 @@ const NewPassword = (): JSX.Element => {
           passMatchRef.current.focus();
         }
     } else {
-      // update password in database and send user back to login page
-      // make sure to reset userID and username in state
+      axios({
+        method: 'put',
+        url: ENDPOINTS.CHANGE_PASSWORD,
+        data: {
+          userId,
+          password,
+        },
+        signal: controller.signal,
+      })
+      .then(res => {
+        if (res.data === 'success') {
+          // create modal displaying if password change was successful
+          dispatch(logout);
+          navigate('/');
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
     }
+
+    return () => {
+      controller.abort();
+    };
   };
 
   return (
@@ -43,6 +71,7 @@ const NewPassword = (): JSX.Element => {
       <input id='new-password'
         type='password'
         value={password}
+        autoFocus
         required
         onChange={(e)=>{setPassword(e.target.value)}}
         onFocus={()=>{setPasswordReq(true)}}

@@ -1,35 +1,41 @@
 import { createReducer, createAction } from '@reduxjs/toolkit';
 
 interface UserState {
-  userID?: string;
-  username?: string;
-  loggedIn?: boolean;
+  userId: string;
+  username: string;
+  loggedIn: boolean;
 }
 
 const initialState: UserState = {
-  userID: '',
+  userId: '',
   username: '',
   loggedIn: false,
 }
 
-export const login = createAction<UserState>('user/login');
-export const logout = createAction<UserState>('user/logout');
-export const verifyUser = createAction<UserState>('user/hasAccount');
+interface UserAction {
+  userId: string;
+  username: string;
+  loggedIn?: boolean;
+}
+
+export const login = createAction<UserAction>('user/login');
+export const logout = createAction<UserAction>('user/logout');
+export const verifyUser = createAction<UserAction>('user/hasAccount');
 
 const usersReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(login, (state, action) => {
-      state.userID = action.payload.userID;
+      state.userId = action.payload.userId;
       state.username = action.payload.username;
       state.loggedIn = true;
     })
     .addCase(logout, (state) => {
-      state.userID = '';
+      state.userId = '';
       state.username = '';
       state.loggedIn = false;
     })
     .addCase(verifyUser, (state, action) => {
-      state.userID = action.payload.userID;
+      state.userId = action.payload.userId;
       state.username = action.payload.username;
     })
 });

@@ -5,6 +5,8 @@ import { IconContext } from 'react-icons';
 import { useAppDispatch } from '../../hooks';
 import { login } from '../../reducers/userReducer';
 import PasswordRequirements from '../PasswordRequirements/PasswordRequirements';
+import axios from 'axios';
+import { ENDPOINTS } from '../../constants/endpoints';
 import './Signup.css';
 
 const Signup = (): JSX.Element => {
@@ -16,19 +18,23 @@ const Signup = (): JSX.Element => {
   ];
   
   // form input fields
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [question, setQuestion] = useState(options[0]);
-  const [answer, setAnswer] = useState('');
+  const [form, setForm] = useState({
+    username: '',
+    password: '',
+    confirmPassword: '',
+    question: options[0],
+    answer: '',
+  });
 
   // displays password tooltips
   const [passwordReq, setPasswordReq] = useState(false);
   const [passwordMatcher, setPasswordMatcher] = useState(false);
 
   // displays error messages
-  const [usernameTaken, setUsernameTaken] = useState(false);
-  const [hasQuestion, setHasQuestion] = useState(true);
+  const [errorMsg, setErrorMsg] = useState({
+    username: false,
+    question: false,
+  });
 
   // used to set focus to certain input fields
   const passInvalidRef = useRef<HTMLInputElement>(null);
@@ -39,6 +45,15 @@ const Signup = (): JSX.Element => {
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
+    const controller = new AbortController();
+    const {
+      username,
+      password,
+      confirmPassword,
+      question,
+      answer
+    } = form;
+
     if (!/[A-Z]/.test(password) ||
         !/[a-z]/.test(password) ||
         !/\d/.test(password) ||
@@ -51,51 +66,100 @@ const Signup = (): JSX.Element => {
         passNoMatchRef.current.focus();
       }
     } else if(question === options[0]) {
-        setHasQuestion(false);
+        setErrorMsg({
+          ...errorMsg,
+          question: true,
+        });
     } else {
-      // set userID, username and loggedIn in state
-      // navigate to summary page
-      dispatch(login({ userID: '111', username }));
-      setUsernameTaken(false);
-      navigate('/summary');
+      axios({
+        method: 'post',
+        url: ENDPOINTS.SIGN_UP, 
+        data: {
+         username,
+         password,
+         question,
+         answer,
+        },
+        signal: controller.signal,
+      })
+      .then(res => {
+        if (res.data.userId) {
+          dispatch(login({ 
+            userId: res.data.userId,
+            username: res.data.username
+          }));
+          navigate('/summary');
+        } else {
+          setErrorMsg({
+            ...errorMsg,
+            username: true,
+          });
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
     }
+
+    return () => {
+      controller.abort();
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
   };
 
   return (
     <form className='login' onSubmit={handleSignup}>
       <h1>FinancePal</h1>
       <label htmlFor='username'>Username</label>
-      <input id='username'
+      <input
+        id='username'
+        name='username'
         type='text'
-        value={username}
         required
-        onChange={(e)=>{setUsername(e.target.value)}}
+        value={form.username}
+        onChange={(e) => {
+          setErrorMsg({
+            ...errorMsg,
+            username:false,
+          });
+          handleChange(e);
+        }}
       />
 
-      { usernameTaken &&
+      { errorMsg.username &&
         <p className='error-message' role='alert'>
           Sorry, that username is already taken
         </p> }
       
       <label htmlFor='password'>Password</label>
-      <input id='password'
+      <input
+        id='password'
+        name='password'
         type='password'
-        value={password}
         required
-        onChange={(e)=>{setPassword(e.target.value)}}
+        value={form.password}
+        onChange={handleChange}
         onFocus={()=>setPasswordReq(true)}
         onBlur={()=>setPasswordReq(false)}
         ref={passInvalidRef}
       />
 
-      { passwordReq && <PasswordRequirements password={password}/> }
+      { passwordReq && <PasswordRequirements password={form.password}/> }
 
       <label htmlFor='confirm-password'>Confirm Password</label>
-      <input id='confirm-password'
+      <input
+        id='confirm-password'
+        name='confirmPassword'
         type='password'
-        value={confirmPassword}
         required
-        onChange={(e)=>{setConfirmPassword(e.target.value)}}
+        value={form.confirmPassword}
+        onChange={handleChange}
         onFocus={() => setPasswordMatcher(true)}
         onBlur={() => setPasswordMatcher(false)}
         ref={passNoMatchRef}
@@ -103,7 +167,7 @@ const Signup = (): JSX.Element => {
 
       {passwordMatcher &&
         <div id='password-match' role='alert'>
-          {password === confirmPassword ?
+          {form.password === form.confirmPassword ?
             <IconContext.Provider value={{ color: 'green'}}>
               <FaCheck/>
             </IconContext.Provider>
@@ -117,28 +181,39 @@ const Signup = (): JSX.Element => {
       }
       
       <label htmlFor='security-question'>Security Question</label>
-      <select id='security-question'
-        value={question}
-        onChange={(e)=>{setQuestion(e.target.value)}}>
-          {options.map((question, idx) => 
-            <option key={idx} value={question}>
-              {question}
-            </option>
-          )}
+      <select
+        id='security-question'
+        name='question'
+        value={form.question}
+        onChange={(e) => {
+          setErrorMsg({
+            ...errorMsg,
+            question: false,
+          });
+          handleChange(e);
+        }}
+      >
+        {options.map((question, idx) =>
+          <option key={idx} value={question}>
+            {question}
+          </option>
+        )}
       </select>
 
-      { !hasQuestion &&
+      { errorMsg.question &&
         <p className='error-message' role='alert'>
           Please select a security question
         </p>
       }
 
       <label htmlFor='securityAnswer'>Answer</label>
-      <input id='securityAnswer'
+      <input
+        id='securityAnswer'
+        name='answer'
         type='text'
-        value={answer}
         required
-        onChange={(e)=>{setAnswer(e.target.value)}}
+        value={form.answer}
+        onChange={handleChange}
       />
 
       <button type='submit' className='primaryBtn'>Sign up</button>

@@ -6,16 +6,6 @@ import { ENDPOINTS } from '../../constants/endpoints';
 import axios from 'axios';
 import './Login.css';
 
-interface Request {
-  username: string;
-  password: string;
-}
-
-interface Response {
-  userId: string;
-  username: string;
-}
-
 const Login = (): JSX.Element => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -26,40 +16,63 @@ const Login = (): JSX.Element => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    axios.post<Request, Response>(ENDPOINTS.USER_LOGIN, {
-      username,
-      password
+    const controller = new AbortController();
+    axios({
+      method: 'post',
+      url: ENDPOINTS.USER_LOGIN,
+      data: {
+        username,
+        password
+      },
+      signal: controller.signal,
     })
-    .then((res) => {
-      if ((res.userId)) {
-        dispatch(login({ userID: res.userId, username: res.username}));
+    .then(res => {
+      if ((res.data.userId)) {
+        dispatch(login({
+          userId: res.data.userId,
+          username: res.data.username
+        }));
         navigate('summary');
       } else {
         setInvalidUser(true);
       }
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(err);
     });
+
+    return () => {
+      controller.abort();
+    }
   };
 
   return (
     <form className='login' onSubmit={handleLogin}>
       <h1>FinancePal</h1>
       <label htmlFor='username'>Username</label>
-      <input id='username'
+      <input
+        id='username'
         type='text'
         value={username}
+        autoComplete='true'
+        autoFocus
         required
-        onChange={(e)=>{setUsername(e.target.value)}}
+        onChange={(e)=>{
+          setInvalidUser(false);
+          setUsername(e.target.value);
+        }}
       />
 
       <label htmlFor='password'>Password</label>
-      <input id='password'
+      <input
+        id='password'
         type='password'
         value={password}
         required
-        onChange={(e)=>{setPassword(e.target.value)}}
+        onChange={(e)=>{
+          setInvalidUser(false);
+          setPassword(e.target.value)
+        }}
       />
 
       <p id='forgot-password'>
