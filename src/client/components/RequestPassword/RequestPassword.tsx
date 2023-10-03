@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { verifyUser } from '../../reducers/userReducer';
+import axios from 'axios';
+import { ENDPOINTS } from '../../constants/endpoints';
 
 const RequestPassword = () => {
   const [username, setUsername] = useState('');
@@ -12,14 +14,34 @@ const RequestPassword = () => {
 
   const handleRequest = (e: React.FormEvent) => {
     e.preventDefault();
-    // fetch to see if username entered exists in database
-    // if not set userNotFound to true to display error
-    // else route to security question prompt
-    // with security question and answer returned from db
-    // set userID and username in state
-    dispatch(verifyUser({ userID: '123', username: username }));
-    setUserNotFound(false);
-    navigate('/security_question', {state: ['question', 'answer']});
+    const controller = new AbortController();
+    axios({
+      method: 'get',
+      url: ENDPOINTS.GET_SECURITY_QUESTION + `/${username}`,
+      signal: controller.signal,
+    })
+      .then(res => {
+        if (res.data.userId) {
+          dispatch(verifyUser({
+            userId: res.data.userId,
+            username: res.data.username,
+          }));
+          navigate('/security_question', {
+            state: {
+              question: res.data.question,
+            }
+          });
+        } else {
+          setUserNotFound(true);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
+    
+    return () => {
+      controller.abort();
+    }
   };
 
   return (
@@ -30,15 +52,19 @@ const RequestPassword = () => {
         id='username'
         type='text'
         value={username}
+        autoComplete='true'
+        autoFocus
         required
-        onChange={(e)=>{setUsername(e.target.value)}}
+        onChange={(e)=>{
+          setUserNotFound(false);
+          setUsername(e.target.value);
+        }}
       />
 
-      {userNotFound && 
+      { userNotFound && 
         <p className='error-message' role='alert'>
           There is no account registered with the username entered
-        </p>
-      }
+        </p> }
 
       <button type='submit' className='primaryBtn'>Request New Password</button>
 

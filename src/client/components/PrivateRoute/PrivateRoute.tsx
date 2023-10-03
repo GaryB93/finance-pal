@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks';
 const PrivateRoute = ({ route }: { route: JSX.Element}): JSX.Element => {
   const user = useAppSelector(state => state.user);
 
-  if (user.userID !== '') {
+  if (user.userId !== '') {
     return route;
   } else {
     return <Navigate to='/' />

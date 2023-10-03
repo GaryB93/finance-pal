@@ -50,5 +50,9 @@ describe('Login form', () => {
     expect(loginBtn).toBeVisible();
   });
 
-  
+  test('renders without an alert by default', () => {
+    renderWithProviders(<Login/>);
+    const alert = screen.queryByRole('alert');
+    expect(alert).toBe(null);
+  });
 });
