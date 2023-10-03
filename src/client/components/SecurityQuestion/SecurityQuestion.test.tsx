@@ -2,6 +2,10 @@ import { screen, fireEvent } from '@testing-library/react';
 import { renderWithProviders } from '../../__tests__/test-utils';
 import SecurityQuestion from './SecurityQuestion';
 
+/**
+ * TODO: Implement testing with state object from useNavigate?
+ */
+
 describe.skip('Security question form', () => {
 
   test('should render a readonly input field with Security Question label', () => {

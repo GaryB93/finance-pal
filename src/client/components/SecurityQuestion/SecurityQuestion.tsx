@@ -16,7 +16,6 @@ const SecurityQuestion = (): JSX.Element => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const controller = new AbortController();
     axios({
       method: 'post',
       url: ENDPOINTS.CHECK_SECURITY_ANSWER,
@@ -24,7 +23,6 @@ const SecurityQuestion = (): JSX.Element => {
         userId: userId,
         answer: answer,
       },
-      signal: controller.signal,
     })
     .then(res => {
       if (res.data === 'answer is correct') {
@@ -36,10 +34,6 @@ const SecurityQuestion = (): JSX.Element => {
     .catch(err => {
       console.error(err);
     });
-
-    return () => {
-      controller.abort();
-    }
   };
 
   return (

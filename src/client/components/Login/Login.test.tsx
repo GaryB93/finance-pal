@@ -2,6 +2,10 @@ import { screen, fireEvent } from '@testing-library/react';
 import { renderWithProviders } from '../../__tests__/test-utils';
 import Login from './Login';
 
+/**
+ * TODO: Use MSW to mock server requests
+ */
+
 describe('Login form', () => {
 
   test('input field with username label renders empty', () => {

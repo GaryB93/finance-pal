@@ -2,6 +2,10 @@ import { screen, fireEvent } from '@testing-library/react';
 import { renderWithProviders } from '../../__tests__/test-utils';
 import RequestPassword from './RequestPassword';
 
+/**
+ * TODO: Mock server request with MSW for valid and invalid usernames
+ */
+
 describe('RequestPassword form', () => {
 
   test('should render an empty username input field', () => {
@@ -28,5 +32,11 @@ describe('RequestPassword form', () => {
     renderWithProviders(<RequestPassword/>);
     const link = screen.getByRole('link', {name: 'Login'});
     expect(link).toBeVisible();
+  });
+
+  test('should not render an alert on default', () => {
+    renderWithProviders(<RequestPassword/>);
+    const alert = screen.queryByRole('alert');
+    expect(alert).toBe(null);
   });
 });

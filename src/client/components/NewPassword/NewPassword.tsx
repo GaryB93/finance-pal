@@ -8,6 +8,10 @@ import { ENDPOINTS } from '../../constants/endpoints';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { logout } from '../../reducers/userReducer';
 
+/**
+ * TODO: Change password tooltip icons to checkboxes for accessibility
+ */
+
 const NewPassword = (): JSX.Element => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -25,7 +29,6 @@ const NewPassword = (): JSX.Element => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const controller = new AbortController();
     if (!/[A-Z]/.test(password) ||
         !/[a-z]/.test(password) ||
         !/\d/.test(password) ||
@@ -45,7 +48,6 @@ const NewPassword = (): JSX.Element => {
           userId,
           password,
         },
-        signal: controller.signal,
       })
       .then(res => {
         if (res.data === 'success') {
@@ -58,10 +60,6 @@ const NewPassword = (): JSX.Element => {
         console.error(err);
       });
     }
-
-    return () => {
-      controller.abort();
-    };
   };
 
   return (

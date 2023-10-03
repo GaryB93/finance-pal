@@ -3,6 +3,11 @@ import { userEvent } from '@testing-library/user-event';
 import { renderWithProviders } from '../../__tests__/test-utils';
 import NewPassword from './NewPassword';
 
+/**
+ * TODO: Mock server requests with MSW with a valid password that
+ * redirects user to login page
+ */
+
 describe('New Password submit form', () => {
   test('should render an empty input field with a New Password label', () => {
     renderWithProviders(<NewPassword/>);

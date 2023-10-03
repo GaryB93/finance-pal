@@ -3,6 +3,11 @@ import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from '../../__tests__/test-utils';
 import Signup from './Signup';
 
+/**
+ * TODO: Mock server requests with MSW with a username that already exists
+ * and one that doesn't
+ */
+
 describe('Signup form', () => {
   const options = [
     '-- select an option --',
@@ -129,7 +134,7 @@ describe('Signup form', () => {
     renderWithProviders(<Signup/>);
     const signup = screen.getByRole('button', {name: 'Sign up'});
     expect(signup).toBeVisible();
-  })
+  });
 
   test('renders a link to go back to login page', () => {
     renderWithProviders(<Signup/>);

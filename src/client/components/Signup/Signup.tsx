@@ -9,6 +9,10 @@ import axios from 'axios';
 import { ENDPOINTS } from '../../constants/endpoints';
 import './Signup.css';
 
+/**
+ * TODO: Change password tooltip icons to checkboxes for accessibility?
+ */
+
 const Signup = (): JSX.Element => {
   const options = [
     '-- select an option --',
@@ -45,7 +49,6 @@ const Signup = (): JSX.Element => {
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
-    const controller = new AbortController();
     const {
       username,
       password,
@@ -80,7 +83,6 @@ const Signup = (): JSX.Element => {
          question,
          answer,
         },
-        signal: controller.signal,
       })
       .then(res => {
         if (res.data.userId) {
@@ -100,10 +102,6 @@ const Signup = (): JSX.Element => {
         console.error(err);
       });
     }
-
-    return () => {
-      controller.abort();
-    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -121,6 +119,8 @@ const Signup = (): JSX.Element => {
         id='username'
         name='username'
         type='text'
+        autoFocus
+        autoComplete='true'
         required
         value={form.username}
         onChange={(e) => {

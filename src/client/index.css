@@ -23,7 +23,7 @@
 
   /*error messages*/
   --red: #ff8383;
-  --darkred: #850A25;
+  --darkred: #700119;
 
   /*links*/
   --link: #1C77C3;
@@ -63,9 +63,9 @@ button {
 
 .primaryBtn {
   background-image: linear-gradient(var(--azure), var(--lightblue2));
-  border: 1px solid var(--caribbeancurrent);
+  border: 1px solid var(--gunmetal);
   border-radius: .3rem;
-  color: var(--caribbeancurrent);
+  color: var(--gunmetal);
 }
 
 .primaryBtn:hover {

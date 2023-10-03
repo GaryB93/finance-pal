@@ -16,7 +16,6 @@ const Login = (): JSX.Element => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    const controller = new AbortController();
     axios({
       method: 'post',
       url: ENDPOINTS.USER_LOGIN,
@@ -24,7 +23,6 @@ const Login = (): JSX.Element => {
         username,
         password
       },
-      signal: controller.signal,
     })
     .then(res => {
       if ((res.data.userId)) {
@@ -40,10 +38,6 @@ const Login = (): JSX.Element => {
     .catch(err => {
       console.error(err);
     });
-
-    return () => {
-      controller.abort();
-    }
   };
 
   return (

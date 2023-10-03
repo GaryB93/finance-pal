@@ -14,11 +14,9 @@ const RequestPassword = () => {
 
   const handleRequest = (e: React.FormEvent) => {
     e.preventDefault();
-    const controller = new AbortController();
     axios({
       method: 'get',
       url: ENDPOINTS.GET_SECURITY_QUESTION + `/${username}`,
-      signal: controller.signal,
     })
       .then(res => {
         if (res.data.userId) {
@@ -38,10 +36,6 @@ const RequestPassword = () => {
       .catch(err => {
         console.error(err);
       });
-    
-    return () => {
-      controller.abort();
-    }
   };
 
   return (
