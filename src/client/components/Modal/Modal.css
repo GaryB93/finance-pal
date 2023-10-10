@@ -1,3 +1,16 @@
 .modal::backdrop {
-    background: hsl(0 0% 0% / 50%);
+    background: hsla(0, 0%, 0% / 50%);
+}
+
+.modal {
+    border: 1px solid var(--gunmetal);
+    border-radius: 0.5rem;
+    background-color: var(--grey2);
+    bottom: 20px;
+    color: var(--grey7);
+    width: 400px;
+}
+
+.modal-close-btn {
+    float: right;
 }

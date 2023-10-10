@@ -8,7 +8,7 @@ dotenv.config();
 
 let port = process.env.PORT;
 if (port === null || port === '' || port === undefined) {
-    port = 3000;
+  port = 3000;
 }
 
 const app = express();
@@ -21,7 +21,7 @@ app.use(express.static('dist'));
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 
@@ -31,7 +31,22 @@ app.use('/api/user', userRouter);
 
 // app.use('/api/finances', )
 
+app.use((err, req, res, next) => {
+  console.log(err);
+  return next(err);
+});
+
+app.use((err, req, res, next) => {
+  const defaultErr = {
+    log: 'Global error handler caught error',
+    status: 500,
+    message: { err: 'Caught global error handler' }
+  };
+  const errorObj = Object.assign({}, defaultErr, err);
+  return res.status(errorObj.status).json(errorObj.message);
+});
+
 
 app.listen(port, () => {
-    console.log(`Server started listening on port: ${port}`);
+  console.log(`Server started listening on port: ${port}`);
 });

@@ -5,21 +5,24 @@
   font-size: 16px;
 
   color-scheme: light dark;
-  /*color palette*/
-  --white: #FFFFFF;
-  --aliceblue: #F0F7F9;
-  --azure: #D3E8EE;
-  --lightblue: #B6D9E2;
-  --lightblue2: #99CAD6;
-  --skyblue: #7CBBCB;
-  --moonstone: #489FB5;
-  --bluegreen: #469AAF;
-  --munsell: #3A8092;
-  --caribbeancurrent: #2F6775;
-  --midnightgreen: #295A66;
-  --gunmetal: #17333A;
-  --richblack: #0B191D;
-  --night: #060D0F;
+  /* primaries */
+  --primary1: #92e2ca;
+  --primary2: #5bdfb7;
+  --primary3: #4fc19f;
+  --primary4: #51a68c;
+  --primary5: #3f826e;
+  --primary6: #306454;
+  --primary7: #204339;
+
+  /* greyscale */
+  --grey1: #f1f1f1;
+  --grey2: #e3e3e3;
+  --grey3: #ababab;
+  --grey4: #949494;
+  --grey5: #787878;
+  --grey6: #6a6a6a;
+  --grey7: #3f3f3f;
+  --grey8: #1f1f1f;
 
   /*error messages*/
   --red: #ff8383;
@@ -61,18 +64,18 @@ button {
   cursor: pointer;
 }
 
-.primaryBtn {
-  background-image: linear-gradient(var(--azure), var(--lightblue2));
-  border: 1px solid var(--gunmetal);
+.primary-btn {
+  background-image: linear-gradient(var(--primary2), var(--primary4));
+  border: 1px solid var(--primary7);
   border-radius: .3rem;
-  color: var(--gunmetal);
+  color: var(--primary7);
 }
 
-.primaryBtn:hover {
-  background-image: linear-gradient(var(--lightblue2), var(--lightblue2));
+.primary-btn:hover {
+  background-image: linear-gradient(var(--primary4), var(--primary4));
 }
 
-.secondaryBtn:hover {
+.secondary-btn:hover {
   background-color: var(--);
 }
 
@@ -109,7 +112,7 @@ button {
 }
 
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 426px) {
   .login {
     margin: 0 auto;
   }
@@ -124,14 +127,14 @@ button {
     background-color: var(--bg);
   }
 
-  .secondaryBtn {
+  .secondary-btn {
     background-image: linear-gradient(var(--azure), var(--lightblue2));
     border: 1px solid var(--caribbeancurrent);
     border-radius: .3rem;
     color: var(--caribbeancurrent);
   }
 
-  .secondaryBtn:hover {
+  .secondary-btn:hover {
     background-image: linear-gradient(var(--azure), var(--azure));
   }
   
@@ -139,20 +142,20 @@ button {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: var(--azure);
-    --bg: var(--night);
+    --text: var(--grey2);
+    --bg: var(--grey8);
     color: var(--text);
     background-color: var(--bg);
   }
 
-  .secondaryBtn {
+  .secondary-btn {
     background-image: linear-gradient(var(--azure), var(--lightblue2));
     border: 1px solid var(--caribbeancurrent);
     border-radius: .3rem;
     color: var(--caribbeancurrent);
   }
 
-  .secondaryBtn:hover {
+  .secondary-btn:hover {
     background-image: linear-gradient(var(--azure), var(--azure));
   }
 }

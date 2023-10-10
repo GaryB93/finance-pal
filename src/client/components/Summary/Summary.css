@@ -1,0 +1,9 @@
+.summary {
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+#doughnut-container {
+  max-width: 250px;
+  margin: 1rem auto;
+}
