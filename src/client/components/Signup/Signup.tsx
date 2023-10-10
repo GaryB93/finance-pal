@@ -216,7 +216,7 @@ const Signup = (): JSX.Element => {
         onChange={handleChange}
       />
 
-      <button type='submit' className='primaryBtn'>Sign up</button>
+      <button type='submit' className='primary-btn'>Sign up</button>
       
       <p>
         Back to <Link to={'/'}>Login</Link>

@@ -17,27 +17,31 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Login />,
-    errorElement: <ErrorPage />
+    errorElement: <ErrorPage />,
   },
   {
     path: 'signup',
-    element: <Signup />
+    element: <Signup />,
   },
   {
     path: 'request_password',
-    element: <RequestPassword/>
+    element: <RequestPassword/>,
   },
   {
     path: 'security_question',
-    element: <PrivateRoute route={<SecurityQuestion/>}></PrivateRoute>
+    element: <PrivateRoute route={<SecurityQuestion/>}></PrivateRoute>,
   },
   {
     path: 'new_password',
-    element: <PrivateRoute route={<NewPassword/>}></PrivateRoute>
+    element: <PrivateRoute route={<NewPassword/>}></PrivateRoute>,
   },
   {
     path: 'summary',
-    element: <PrivateRoute route={<Summary/>}></PrivateRoute>
+    element: <PrivateRoute route={<Summary/>}></PrivateRoute>,
+  },
+  {
+    path: 'summary2',
+    element: <Summary/>,
   }
 ]);
 

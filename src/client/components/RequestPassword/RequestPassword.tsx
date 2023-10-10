@@ -60,7 +60,7 @@ const RequestPassword = () => {
           There is no account registered with the username entered
         </p> }
 
-      <button type='submit' className='primaryBtn'>Request New Password</button>
+      <button type='submit' className='primary-btn'>Request New Password</button>
 
       <p>
         Back to <Link to='/'>Login</Link>

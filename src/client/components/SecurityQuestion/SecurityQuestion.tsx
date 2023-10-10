@@ -65,7 +65,7 @@ const SecurityQuestion = (): JSX.Element => {
           The answer you provided is incorrect  
         </p> }
 
-      <button type='submit' className='primaryBtn'>Submit</button>
+      <button type='submit' className='primary-btn'>Submit</button>
       <p>
         Back to <Link to={'/'}>Login</Link>
       </p>

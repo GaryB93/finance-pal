@@ -7,6 +7,7 @@ import PasswordRequirements from '../PasswordRequirements/PasswordRequirements';
 import { ENDPOINTS } from '../../constants/endpoints';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { logout } from '../../reducers/userReducer';
+import Modal from '../Modal/Modal';
 
 /**
  * TODO: Change password tooltip icons to checkboxes for accessibility
@@ -15,6 +16,7 @@ import { logout } from '../../reducers/userReducer';
 const NewPassword = (): JSX.Element => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [modalOpen, setModalOpen] = useState(true);
   const userId = useAppSelector(state => state.user.userId);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -51,9 +53,7 @@ const NewPassword = (): JSX.Element => {
       })
       .then(res => {
         if (res.data === 'success') {
-          // create modal displaying if password change was successful
-          dispatch(logout);
-          navigate('/');
+          setModalOpen(true);
         }
       })
       .catch(err => {
@@ -62,57 +62,73 @@ const NewPassword = (): JSX.Element => {
     }
   };
 
+  const handleCloseModal = () => {
+    dispatch(logout);
+    navigate('/');
+  };
+
   return (
-    <form className='login' onSubmit={handleSubmit}>
-      <h1>FinancePal</h1>
-      <label htmlFor='new-password'>New Password</label>
-      <input id='new-password'
-        type='password'
-        value={password}
-        autoFocus
-        required
-        onChange={(e)=>{setPassword(e.target.value)}}
-        onFocus={()=>{setPasswordReq(true)}}
-        onBlur={()=>{setPasswordReq(false)}}
-        ref={passwordReqRef}
-      />
+    <>
+      <form className='login' onSubmit={handleSubmit}>
+        <h1>FinancePal</h1>
+        <label htmlFor='new-password'>New Password</label>
+        <input id='new-password'
+          type='password'
+          value={password}
+          autoFocus
+          required
+          onChange={(e)=>{setPassword(e.target.value)}}
+          onFocus={()=>{setPasswordReq(true)}}
+          onBlur={()=>{setPasswordReq(false)}}
+          ref={passwordReqRef}
+        />
 
-      { passwordReq && <PasswordRequirements password={password}/> }
+        { passwordReq && <PasswordRequirements password={password}/> }
 
-      <label htmlFor='confirm-password'>Confirm Password</label>
-      <input id='confirm-password'
-        type='password'
-        value={confirmPassword}
-        required
-        onChange={(e)=>{setConfirmPassword(e.target.value)}} 
-        onFocus={()=>{setPasswordMatch(true)}}
-        onBlur={()=>{setPasswordMatch(false)}}
-        ref={passMatchRef}
-      />
+        <label htmlFor='confirm-password'>Confirm Password</label>
+        <input id='confirm-password'
+          type='password'
+          value={confirmPassword}
+          required
+          onChange={(e)=>{setConfirmPassword(e.target.value)}} 
+          onFocus={()=>{setPasswordMatch(true)}}
+          onBlur={()=>{setPasswordMatch(false)}}
+          ref={passMatchRef}
+        />
 
-      {passwordMatch &&
-        <div id='password-match' role='alert'>
-          {password === confirmPassword ?
-            <IconContext.Provider value={{ color: 'green'}}>
-              <FaCheck/>
-            </IconContext.Provider>
-            :
-            <IconContext.Provider value={{ color: 'gray'}}>
-              <FaCheck/>
-            </IconContext.Provider>
-          }
-          <span>Passwords must match</span>
-        </div>
+        {passwordMatch &&
+          <div id='password-match' role='alert'>
+            {password === confirmPassword ?
+              <IconContext.Provider value={{ color: 'green'}}>
+                <FaCheck/>
+              </IconContext.Provider>
+              :
+              <IconContext.Provider value={{ color: 'gray'}}>
+                <FaCheck/>
+              </IconContext.Provider>
+            }
+            <span>Passwords must match</span>
+          </div>
+        }
+
+        <button type='submit' className='primary-btn'>
+            Change Password
+        </button>
+
+        <p>
+          Back to <Link to='/'>Login</Link>
+        </p>
+      </form>
+      { modalOpen && 
+        <Modal
+          isOpen={modalOpen}
+          hasCloseBtn={true}
+          onClose={handleCloseModal}
+        >
+          <p>Password successfully changed. You will now be redirected to the login page.</p>
+        </Modal>
       }
-
-      <button type='submit' className='primaryBtn'>
-          Change Password
-      </button>
-
-      <p>
-        Back to <Link to='/'>Login</Link>
-      </p>
-    </form>
+    </>
   )
 };
 

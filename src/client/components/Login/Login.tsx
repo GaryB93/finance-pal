@@ -79,7 +79,7 @@ const Login = (): JSX.Element => {
         </p>
       }
 
-      <button type='submit' className='primaryBtn'>Login</button>
+      <button type='submit' className='primary-btn'>Login</button>
 
       <p>
         Not a member? <Link to={'signup'}>Sign up</Link>
