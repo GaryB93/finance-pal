@@ -36,7 +36,7 @@ const Select = ({ label, options, selected, styles }: SelectProps) => {
     borderRadius: '10px',
     border: '1px solid #ababab',
     maxWidth: '300px',
-  }
+  };
 
   const newStyles = Object.assign(defaultStyles, styles);
 
@@ -51,6 +51,8 @@ const Select = ({ label, options, selected, styles }: SelectProps) => {
           borderLeft: newStyles.border,
           background: 'none',
           color: newStyles.color,
+          padding: '5px',
+          margin: '5px 0'
         }}>
         {options.map(option =>
           <option value={option.value}>{option.text}</option>

@@ -16,7 +16,7 @@ describe('Login form', () => {
 
   test('user input changes value of username input field', () => {
     renderWithProviders(<Login/>);
-    const usernameInput = screen.getByRole('textbox', { name: 'Username' });
+    const usernameInput = screen.getByRole('textbox', {name: 'Username'});
     const newInput = 'myUsername';
     fireEvent.change(usernameInput, {target: {value : newInput}});
     expect(usernameInput).toHaveValue(newInput);
@@ -38,13 +38,13 @@ describe('Login form', () => {
 
   test('renders a link for users who forget their password', () => {
     renderWithProviders(<Login/>);
-    const forgotPswd = screen.getByRole('link', { name: 'Forgot Password?' });
+    const forgotPswd = screen.getByRole('link', {name: 'Forgot Password?'});
     expect(forgotPswd).toBeVisible();
   });
 
   test('renders a link for users who need to create an account', () => {
     renderWithProviders(<Login/>);
-    const newAcct = screen.getByRole('link', { name: 'Sign up' });
+    const newAcct = screen.getByRole('link', {name: 'Sign up'});
     expect(newAcct).toBeVisible();
   });
 

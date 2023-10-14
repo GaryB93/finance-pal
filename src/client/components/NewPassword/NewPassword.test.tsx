@@ -43,7 +43,7 @@ describe('New Password submit form', () => {
     expect(button).toBeVisible();
   });
 
-  test('user submitting passwords that do not match causes and error', async () => {
+  test('user submitting passwords that do not match causes an alert message', async () => {
     renderWithProviders(<NewPassword/>);
     const user = userEvent.setup();
     const newPassword = screen.getByLabelText('New Password');
@@ -56,7 +56,7 @@ describe('New Password submit form', () => {
     expect(alert).toBeVisible();
   });
 
-  test('user submitting a password that does not pass all tests causes error', async () => {
+  test('user submitting a password that does not pass all tests causes an alert message', async () => {
     renderWithProviders(<NewPassword/>);
     const user = userEvent.setup();
     const newPassword = screen.getByLabelText('New Password');

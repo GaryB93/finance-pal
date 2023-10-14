@@ -8,7 +8,7 @@ import SecurityQuestion from './SecurityQuestion';
 
 describe.skip('Security question form', () => {
 
-  test('should render a readonly input field with Security Question label', () => {
+  test('should render a readonly textarea with Security Question label', () => {
     renderWithProviders(<SecurityQuestion/>);
     const question = screen.getByLabelText('Security Question');
     expect(question).toBeInTheDocument();

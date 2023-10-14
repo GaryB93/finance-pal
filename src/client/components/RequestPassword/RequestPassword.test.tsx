@@ -16,21 +16,21 @@ describe('RequestPassword form', () => {
 
   test('user input should change value of username input field', () => {
     renderWithProviders(<RequestPassword/>);
-    const username = screen.getByRole('textbox', {name: 'Username'});
+    const username = screen.getByRole('textbox', { name: 'Username' });
     const newInput = 'myUsername';
-    fireEvent.change(username, {target: {value: newInput}});
+    fireEvent.change(username, {target: { value: newInput }});
     expect(username).toHaveValue(newInput);
   });
 
   test('should render a button to request new password', () => {
     renderWithProviders(<RequestPassword/>);
-    const button = screen.getByRole('button', {name: 'Request New Password'});
+    const button = screen.getByRole('button', { name: 'Request New Password' });
     expect(button).toBeVisible();
   });
 
   test('should render a link to go back to login page', () => {
     renderWithProviders(<RequestPassword/>);
-    const link = screen.getByRole('link', {name: 'Login'});
+    const link = screen.getByRole('link', { name: 'Login' });
     expect(link).toBeVisible();
   });
 

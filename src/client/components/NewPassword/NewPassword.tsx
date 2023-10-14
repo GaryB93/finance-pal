@@ -14,16 +14,16 @@ import Modal from '../Modal/Modal';
  */
 
 const NewPassword = (): JSX.Element => {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [modalOpen, setModalOpen] = useState(true);
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const userId = useAppSelector(state => state.user.userId);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   
   // displays password tootips
-  const [passwordReq, setPasswordReq] = useState(false);
-  const [passwordMatch, setPasswordMatch] = useState(false);
+  const [passwordReq, setPasswordReq] = useState<boolean>(false);
+  const [passwordMatch, setPasswordMatch] = useState<boolean>(false);
 
   // used to set focus to certain input fields
   const passwordReqRef = useRef<HTMLInputElement>(null);
@@ -35,11 +35,11 @@ const NewPassword = (): JSX.Element => {
         !/[a-z]/.test(password) ||
         !/\d/.test(password) ||
         password.length < 8) {
-      if (passwordReqRef.current !== null) {
+      if (passwordReqRef.current) {
         passwordReqRef.current.focus();
       }
     } else if (password !== confirmPassword) {
-        if (passMatchRef.current !== null) {
+        if (passMatchRef.current) {
           passMatchRef.current.focus();
         }
     } else {

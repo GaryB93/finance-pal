@@ -40,11 +40,15 @@ const SecurityQuestion = (): JSX.Element => {
     <form className='login' onSubmit={handleSubmit}>
       <h1>FinancePal</h1>
       <label htmlFor='question'>Security Question</label>
-      <input
-        id='question'
-        type='textbox'
-        value={question}
-        readOnly
+      <textarea id='question' readOnly value={question}
+        style={{
+          fontFamily: 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif',
+          fontSize: '1rem',
+          background: 'none',
+          padding: '0.5rem',
+          resize: 'none',
+          border: 'none',
+        }}
       />
 
       <label htmlFor='answer'>Answer</label>
