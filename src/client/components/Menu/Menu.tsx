@@ -1,6 +1,8 @@
 const Menu = () => {
   return (
-    <button>Menu</button>
+    <div style={{width: '100%'}}>
+      <button style={{float: 'right'}}>Menu</button>
+    </div>
   )
 };
 

@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import userRouter from './routes/user.js';
+import dataRouter from './routes/data.js';
 
 dotenv.config();
 
@@ -26,10 +27,10 @@ app.get('/', (req, res) => {
 
 
 app.use('/api/user', userRouter);
+app.use('/api/data', dataRouter);
 
 // app.use('/api/cookies', )
 
-// app.use('/api/finances', )
 
 app.use((err, req, res, next) => {
   console.log(err);

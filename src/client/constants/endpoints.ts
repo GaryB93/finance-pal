@@ -4,4 +4,5 @@ export const ENDPOINTS = {
   GET_SECURITY_QUESTION: 'api/user/getSecurityQuestion',
   CHECK_SECURITY_ANSWER: 'api/user/checkSecurityAnswer',
   CHANGE_PASSWORD: 'api/user/changePassword',
+  GET_FINANCE_DATA: 'api/data/',
 };

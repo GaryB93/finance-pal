@@ -1,8 +1,10 @@
 import { combineReducers, configureStore, PreloadedState } from '@reduxjs/toolkit';
 import userReducer from './reducers/userReducer';
+import financeReducer from './reducers/financeReducer';
 
 const rootReducer = combineReducers({
   user: userReducer,
+  finance: financeReducer,
 })
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {

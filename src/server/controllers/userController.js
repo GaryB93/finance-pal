@@ -11,7 +11,7 @@ const userController = {
       return next();
     } catch(err) {
       console.log(err);
-      return next();
+      return next(err);
     }
   },
 
@@ -39,7 +39,7 @@ const userController = {
       return next();
     } catch(err) {
       console.log(err);
-      return next();
+      return next(err);
     }
   },
 
@@ -57,7 +57,7 @@ const userController = {
       return next();
     } catch(err) {
       console.log(err);
-      return next();
+      return next(err);
     }
   },
 
@@ -71,7 +71,7 @@ const userController = {
       return next();
     } catch (err) {
       console.log(err);
-      return next();
+      return next(err);
     }
   },
 
@@ -83,7 +83,7 @@ const userController = {
       return next();
     } catch (err) {
       console.log(err);
-      return next();
+      return next(err);
     }
   },
 };
