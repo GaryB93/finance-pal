@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { verifyUser } from '../../reducers/userReducer';
-import axios from 'axios';
 import { ENDPOINTS } from '../../constants/endpoints';
+import axios from 'axios';
 
-const RequestPassword = () => {
-  const [username, setUsername] = useState('');
-  const [userNotFound, setUserNotFound] = useState(false);
+const RequestPassword = (): JSX.Element => {
+  const [username, setUsername] = useState<string>('');
+  const [userNotFound, setUserNotFound] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();

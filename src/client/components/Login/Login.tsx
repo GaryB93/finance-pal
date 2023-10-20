@@ -4,7 +4,6 @@ import { useAppDispatch } from '../../hooks';
 import { login } from '../../reducers/userReducer';
 import { ENDPOINTS } from '../../constants/endpoints';
 import axios from 'axios';
-import './Login.css';
 
 const Login = (): JSX.Element => {
   const [username, setUsername] = useState<string>('');
@@ -69,11 +68,11 @@ const Login = (): JSX.Element => {
         }}
       />
 
-      <p id='forgot-password'>
+      <p style={{ textAlign: 'left', margin: '0.5rem 0'}}>
         <Link to={'request_password'}>Forgot Password?</Link>
       </p>
 
-      {invalidUser &&
+      { invalidUser &&
         <p className='error-message' role='alert'>
           The username or password you entered is incorrect
         </p>
