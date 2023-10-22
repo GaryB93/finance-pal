@@ -4,18 +4,21 @@ interface UserState {
   userId: string;
   username: string;
   loggedIn: boolean;
+  created: Date;
 }
 
 const initialState: UserState = {
   userId: '',
   username: '',
   loggedIn: false,
+  created: new Date,
 }
 
 interface UserAction {
   userId: string;
   username: string;
   loggedIn?: boolean;
+  created: Date;
 }
 
 export const login = createAction<UserAction>('user/login');
@@ -27,6 +30,7 @@ const usersReducer = createReducer(initialState, (builder) => {
     .addCase(login, (state, action) => {
       state.userId = action.payload.userId;
       state.username = action.payload.username;
+      state.created = action.payload.created;
       state.loggedIn = true;
     })
     .addCase(logout, (state) => {

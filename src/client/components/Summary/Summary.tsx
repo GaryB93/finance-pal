@@ -6,6 +6,7 @@ import axios from 'axios';
 import { ENDPOINTS } from '../../constants/endpoints';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { financesFetched } from '../../reducers/financeReducer';
+import { months } from '../../constants/months';
 
 const Summary = () => {
   const userId = useAppSelector(state => state.user.userId);
@@ -33,6 +34,11 @@ const Summary = () => {
     };
   }, [userId, dispatch]);
 
+  incomes.forEach(income => {
+    console.log(typeof income.date);
+    Date.parse(income.date)
+  });
+
   return (
     <div className='summary'>
       <Menu />
@@ -40,9 +46,11 @@ const Summary = () => {
         <DoughnutChart />
       </div>
       <select aria-label={'month'}>
-        <option>September 2023</option>
-        <option>October 2023</option>
-        <option>November 2023</option>
+        {
+          months.map((month, idx) => 
+            <option value={idx} key={month}>{month} 2023</option>
+          )
+        }
       </select>
       <div className={'month-summaries'}>
         <span>Income:</span>

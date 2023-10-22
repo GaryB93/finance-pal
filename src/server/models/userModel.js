@@ -17,6 +17,7 @@ mongoose.connect(uri, {
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
+  created: { type: Date, required: true, default: Date.now() },
   securityQuestion: { type: String, required: true },
   securityAnswer: { type: String, required: true },
   incomes: [{
