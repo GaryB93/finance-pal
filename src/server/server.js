@@ -31,13 +31,7 @@ app.use('/api/finance', financeRouter);
 
 // app.use('/api/cookies', )
 
-
-app.use((err, req, res, next) => {
-  console.log(err);
-  return next(err);
-});
-
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   const defaultErr = {
     log: 'Global error handler caught error',
     status: 500,

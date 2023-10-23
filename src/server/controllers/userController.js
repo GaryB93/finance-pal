@@ -6,7 +6,7 @@ const userController = {
     try {
       const user = await User.findOne({ username: username }).exec();
       if (user && user.password === password) {
-        res.locals.user = { userId: user._id, username: user.username };
+        res.locals.user = { userId: user._id, username: user.username, created: user.created };
       }
       return next();
     } catch(err) {
