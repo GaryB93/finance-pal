@@ -7,6 +7,7 @@ import { login } from '../../reducers/userReducer';
 import PasswordRequirements from '../PasswordRequirements/PasswordRequirements';
 import axios from 'axios';
 import { ENDPOINTS } from '../../constants/endpoints';
+import { securityQuestions } from '../../constants/securityQuestions';
 import './Signup.css';
 
 /**
@@ -14,19 +15,13 @@ import './Signup.css';
  */
 
 const Signup = (): JSX.Element => {
-  const options = [
-    '-- select an option --',
-    "What is your mother's maiden name?",
-    "What is the name of your first pet?",
-    "What was the make and model of your first car?",
-  ];
   
   // form input fields
   const [form, setForm] = useState({
     username: '',
     password: '',
     confirmPassword: '',
-    question: options[0],
+    question: securityQuestions[0],
     answer: '',
   });
 
@@ -68,7 +63,7 @@ const Signup = (): JSX.Element => {
       if (passNoMatchRef.current !== null) {
         passNoMatchRef.current.focus();
       }
-    } else if(question === options[0]) {
+    } else if(question === securityQuestions[0]) {
         setErrorMsg({
           ...errorMsg,
           question: true,
@@ -86,9 +81,10 @@ const Signup = (): JSX.Element => {
       })
       .then(res => {
         if (res.data.userId) {
-          dispatch(login({ 
+          dispatch(login({
             userId: res.data.userId,
-            username: res.data.username
+            username: res.data.username,
+            created: res.data.created,
           }));
           navigate('/summary');
         } else {
@@ -120,7 +116,7 @@ const Signup = (): JSX.Element => {
         name='username'
         type='text'
         autoFocus
-        autoComplete='true'
+        autoComplete='off'
         required
         value={form.username}
         onChange={(e) => {
@@ -193,7 +189,7 @@ const Signup = (): JSX.Element => {
           handleChange(e);
         }}
       >
-        {options.map((question, idx) =>
+        {securityQuestions.map((question, idx) =>
           <option key={idx} value={question}>
             {question}
           </option>
@@ -211,6 +207,7 @@ const Signup = (): JSX.Element => {
         id='securityAnswer'
         name='answer'
         type='text'
+        autoComplete='off'
         required
         value={form.answer}
         onChange={handleChange}

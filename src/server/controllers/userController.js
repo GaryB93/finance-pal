@@ -6,7 +6,7 @@ const userController = {
     try {
       const user = await User.findOne({ username: username }).exec();
       if (user && user.password === password) {
-        res.locals.user = { userId: user._id, username: user.username };
+        res.locals.user = { userId: user._id, username: user.username, created: user.created };
       }
       return next();
     } catch(err) {
@@ -29,12 +29,13 @@ const userController = {
         const newUser = new User({
           username: username,
           password: password,
+          created: new Date(),
           securityQuestion: question,
           securityAnswer: answer,
         });
 
         const doc = await newUser.save();
-        res.locals.user = { userId: doc._id, username: doc.username };
+        res.locals.user = { userId: doc._id, username: doc.username, created: doc.created };
       }
       return next();
     } catch(err) {

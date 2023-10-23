@@ -36,6 +36,12 @@ describe('Login form', () => {
     expect(passwordInput).toHaveValue(newInput);
   });
 
+  test('renders a button for logging in', () => {
+    renderWithProviders(<Login/>);
+    const button = screen.getByRole('button', {name: 'Login'});
+    expect(button).toBeVisible();
+  })
+
   test('renders a link for users who forget their password', () => {
     renderWithProviders(<Login/>);
     const forgotPswd = screen.getByRole('link', {name: 'Forgot Password?'});

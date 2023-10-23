@@ -1,6 +1,6 @@
 import User from "../models/userModel.js";
 
-const dataController = {
+const financeController = {
   finances: async (req, res, next) => {
     const userId = req.params.userId;
     try {
@@ -13,4 +13,4 @@ const dataController = {
   },
 };
 
-export default dataController;
+export default financeController;

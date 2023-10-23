@@ -17,15 +17,16 @@ mongoose.connect(uri, {
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
+  created: { type: Date, required: true, default: new Date() },
   securityQuestion: { type: String, required: true },
   securityAnswer: { type: String, required: true },
   incomes: [{
-    date: { type: Date, required: true, default: Date.now() },
+    date: { type: Date, required: true, default: new Date() },
     description: { type: String, required: true },
     amount: { type: Number, required: true },
   }],
   expenses: [{
-    date: { type: Date, required: true, default: Date.now() },
+    date: { type: Date, required: true, default: new Date() },
     category: { type: String },
     description: { type: String, required: true },
     amount: { type: Number, required: true },

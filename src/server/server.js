@@ -3,7 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import userRouter from './routes/user.js';
-import dataRouter from './routes/data.js';
+import financeRouter from './routes/finance.js';
 
 dotenv.config();
 
@@ -27,17 +27,11 @@ app.get('/', (req, res) => {
 
 
 app.use('/api/user', userRouter);
-app.use('/api/data', dataRouter);
+app.use('/api/finance', financeRouter);
 
 // app.use('/api/cookies', )
 
-
-app.use((err, req, res, next) => {
-  console.log(err);
-  return next(err);
-});
-
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   const defaultErr = {
     log: 'Global error handler caught error',
     status: 500,
