@@ -81,7 +81,7 @@ const Signup = (): JSX.Element => {
       })
       .then(res => {
         if (res.data.userId) {
-          dispatch(login({ 
+          dispatch(login({
             userId: res.data.userId,
             username: res.data.username,
             created: res.data.created,

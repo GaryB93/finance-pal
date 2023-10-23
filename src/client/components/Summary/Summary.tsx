@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import DoughnutChart from "../DoughnutChart";
 import Menu from '../Menu';
 import './Summary.css';
@@ -7,19 +7,28 @@ import { ENDPOINTS } from '../../constants/endpoints';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { financesFetched } from '../../reducers/financeReducer';
 import { months } from '../../constants/months';
-import { generateYears } from '../../utils/yearGenerator';
+import { generateYears } from '../../utils/generateYears';
+import { calculateTotals } from '../../utils/calculateTotals';
+import { monthSelected, yearSelected } from '../../reducers/financeReducer';
 
 const Summary = () => {
-  const today = new Date();
-
   const userId = useAppSelector(state => state.user.userId);
+  const created = useAppSelector(state => state.user.created);
   const incomes = useAppSelector(state => state.finance.incomes);
   const expenses = useAppSelector(state => state.finance.expenses);
-  const [month, setMonth] = useState(today.getMonth().toString());
-  const [year, setYear] = useState(today.getFullYear().toString());
+  const month = useAppSelector(state => state.finance.month);
+  const year = useAppSelector(state => state.finance.year);
   const dispatch = useAppDispatch();
   
-  const years = generateYears(today);
+  const years = generateYears(created);
+  const totalIncome = calculateTotals(incomes, year, month);
+  const totalExpenses = calculateTotals(expenses, year, month);
+
+  useEffect(() => {
+    const today = new Date();
+    dispatch(monthSelected(today.getMonth().toString()));
+    dispatch(yearSelected(today.getFullYear().toString()));
+  }, [dispatch]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -40,15 +49,6 @@ const Summary = () => {
     };
   }, [userId, dispatch]);
 
-
-  // incomes.forEach(income => {
-  //   const date = new Date(income.date);
-  //   console.log(date);
-  //   console.log('here');
-  // });
-
-  console.log('render');
-
   return (
     <div className='summary'>
       <Menu />
@@ -59,7 +59,7 @@ const Summary = () => {
         <select 
           aria-label={'month'}
           value={month}
-          onChange={(e) => {setMonth(e.target.value)}}
+          onChange={(e) => {dispatch(monthSelected(e.target.value))}}
         >
           {
             months.map((month, idx) =>
@@ -70,7 +70,7 @@ const Summary = () => {
         <select
           aria-label={'year'}
           value={year}
-          onChange={(e) => {setYear(e.target.value)}}>
+          onChange={(e) => {dispatch(yearSelected(e.target.value))}}>
           {
             years.map(year => 
               <option value={year} key={year}>{year}</option>
@@ -80,27 +80,16 @@ const Summary = () => {
       </div>
       <div className={'month-summaries'}>
         <span>Income:</span>
-        <span>
-          {incomes.reduce((acc, curr) => {
-            const date = new Date(curr.date);
-            console.log(date);
-            // if (curr.date.getFullYear().toString() === year &&
-            //   curr.date.getMonth().toString() == month) {
-            //     return acc + curr.amount;
-            // }
-              return acc;
-            }, 0)
-          }
-        </span>
+        <span>{totalIncome.toFixed(2)}</span>
       </div>
       <div className={'month-summaries'}>
         <span>Expense:</span>
-        <span>0.00</span>
+        <span>{totalExpenses.toFixed(2)}</span>
       </div>
       <hr style={{ width: '90%'}}/>
       <div className={'month-summaries'}>
         <span>Total:</span>
-        <span>0.00</span>
+        <span>{(totalIncome - totalExpenses).toFixed(2)}</span>
       </div>
       <div className={'bottom'}>
         <button>Locked</button>
