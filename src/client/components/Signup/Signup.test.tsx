@@ -2,6 +2,7 @@ import { screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from '../../__tests__/test-utils';
 import Signup from './Signup';
+import { securityQuestions } from '../../constants/securityQuestions';
 
 /**
  * TODO: Mock server requests with MSW with a username that already exists
@@ -9,12 +10,6 @@ import Signup from './Signup';
  */
 
 describe('Signup form', () => {
-  const options = [
-    '-- select an option --',
-    "What is your mother's maiden name?",
-    "What is the name of your first pet?",
-    "What was the make and model of your first car?",
-  ];
 
   test('input field with username label renders empty', () => {
     renderWithProviders(<Signup/>);
@@ -79,22 +74,22 @@ describe('Signup form', () => {
   test('select field with security questions label renders with correct default option', () => {
     renderWithProviders(<Signup/>);
     const question = screen.getByLabelText('Security Question');
-    expect(question).toHaveValue(options[0]);
+    expect(question).toHaveValue(securityQuestions[0]);
   });
 
   test('select field renders with correct number of options', () => {
     renderWithProviders(<Signup/>);
     const questions = screen.getAllByRole('option');
-    expect(questions.length).toBe(options.length);
+    expect(questions.length).toBe(securityQuestions.length);
   });
 
   test('user input changes value of security question select field', () => {
     renderWithProviders(<Signup/>);
     const question = screen.getByRole('combobox', {name: 'Security Question'});
-    fireEvent.change(question, {target: {value: options[2]}});
-    const option = (screen.getByRole('option', {name: options[2]})) as HTMLOptionElement;
+    fireEvent.change(question, {target: {value: securityQuestions[2]}});
+    const option = (screen.getByRole('option', {name: securityQuestions[2]})) as HTMLOptionElement;
     expect(option.selected).toBeTruthy();
-    const notSelectedOption = (screen.getByRole('option', {name: options[1]})) as HTMLOptionElement;
+    const notSelectedOption = (screen.getByRole('option', {name: securityQuestions[1]})) as HTMLOptionElement;
     expect(notSelectedOption.selected).toBeFalsy();
   });
 
@@ -110,6 +105,12 @@ describe('Signup form', () => {
     const newInput = 'myAnswer';
     fireEvent.change(answer, {target: {value: newInput}});
     expect(answer).toHaveValue(newInput);
+  });
+
+  test('renders a signup button', () => {
+    renderWithProviders(<Signup/>);
+    const signup = screen.getByRole('button', {name: 'Sign up'});
+    expect(signup).toBeVisible();
   });
 
   test('user not picking a security question but filling all other' +
@@ -128,12 +129,6 @@ describe('Signup form', () => {
     fireEvent.click(signup);
     const alert = screen.getByRole('alert');
     expect(alert).toBeVisible();
-  });
-
-  test('renders a signup button', () => {
-    renderWithProviders(<Signup/>);
-    const signup = screen.getByRole('button', {name: 'Sign up'});
-    expect(signup).toBeVisible();
   });
 
   test('renders a link to go back to login page', () => {
