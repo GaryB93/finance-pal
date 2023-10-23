@@ -88,7 +88,8 @@ const Signup = (): JSX.Element => {
         if (res.data.userId) {
           dispatch(login({ 
             userId: res.data.userId,
-            username: res.data.username
+            username: res.data.username,
+            created: res.data.created,
           }));
           navigate('/summary');
         } else {

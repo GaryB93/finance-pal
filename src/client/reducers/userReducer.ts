@@ -11,7 +11,7 @@ const initialState: UserState = {
   userId: '',
   username: '',
   loggedIn: false,
-  created: new Date,
+  created: new Date(),
 }
 
 interface UserAction {
@@ -36,6 +36,7 @@ const usersReducer = createReducer(initialState, (builder) => {
     .addCase(logout, (state) => {
       state.userId = '';
       state.username = '';
+      state.created = new Date();
       state.loggedIn = false;
     })
     .addCase(verifyUser, (state, action) => {
