@@ -16,21 +16,21 @@ userRouter.post('/signup',
   }
 );
 
-userRouter.get('/getSecurityQuestion/:username', 
+userRouter.get('/securityQuestion/:username',
   userController.verifyUsername,
   (req, res) => {
     res.status(200).json(res.locals.user);
   }
 );
 
-userRouter.post('/checkSecurityAnswer',
+userRouter.post('/securityAnswer',
   userController.checkSecurityAnswer,
   (req, res) => {
     res.status(200).json(res.locals.message);
   }
 );
 
-userRouter.put('/changePassword',
+userRouter.put('/password',
   userController.changePassword,
   (req, res) => {
     res.status(201).json(res.locals.message);

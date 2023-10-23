@@ -54,7 +54,7 @@ const SecurityQuestion = (): JSX.Element => {
       <label htmlFor='answer'>Answer</label>
       <input
         id='answer'
-        type='textbox'
+        type='password'
         value={answer}
         autoFocus
         required
@@ -66,7 +66,7 @@ const SecurityQuestion = (): JSX.Element => {
 
       { inValidAnswer &&
         <p className='error-message' role='alert'>
-          The answer you provided is incorrect  
+          The answer you provided is incorrect
         </p> }
 
       <button type='submit' className='primary-btn'>Submit</button>
