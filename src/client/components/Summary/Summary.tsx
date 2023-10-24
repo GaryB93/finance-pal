@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import DoughnutChart from "../DoughnutChart";
 import Menu from '../Menu';
 import './Summary.css';
@@ -8,10 +8,11 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 import { financesFetched } from '../../reducers/financeReducer';
 import { months } from '../../constants/months';
 import { generateYears } from '../../utils/generateYears';
-import { calculateTotals } from '../../utils/calculateTotals';
+import { calculateTotal } from '../../utils/calculateTotal';
+import { filterItems } from '../../utils/filterItems';
 import { monthSelected, yearSelected } from '../../reducers/financeReducer';
 
-const Summary = () => {
+const Summary = (): JSX.Element => {
   const userId = useAppSelector(state => state.user.userId);
   const created = useAppSelector(state => state.user.created);
   const incomes = useAppSelector(state => state.finance.incomes);
@@ -20,10 +21,6 @@ const Summary = () => {
   const year = useAppSelector(state => state.finance.year);
   const dispatch = useAppDispatch();
   
-  const years = generateYears(created);
-  const totalIncome = calculateTotals(incomes, year, month);
-  const totalExpenses = calculateTotals(expenses, year, month);
-
   useEffect(() => {
     const controller = new AbortController();
     axios({
@@ -37,11 +34,17 @@ const Summary = () => {
     .catch(err => {
       console.error(err);
     });
-
+    
     return () => {
       controller.abort();
     };
   }, [userId, dispatch]);
+  
+  const filteredIncome = useMemo(() => filterItems(incomes, month, year), [incomes, month, year]);
+  const filteredExpenses = useMemo(() => filterItems(expenses, month, year), [expenses, month, year]);
+  const totalIncome = calculateTotal(filteredIncome);
+  const totalExpenses = calculateTotal(filteredExpenses);
+  const years = generateYears(created);
 
   return (
     <div className='summary'>
@@ -50,9 +53,7 @@ const Summary = () => {
         <DoughnutChart />
       </div>
       <div id='select'>
-        <select 
-          aria-label={'month'}
-          value={month}
+        <select aria-label={'month'} value={month} id='month-selector'
           onChange={(e) => {dispatch(monthSelected(e.target.value))}}
         >
           {
@@ -61,12 +62,10 @@ const Summary = () => {
             )
           }
         </select>
-        <select
-          aria-label={'year'}
-          value={year}
+        <select aria-label={'year'} value={year} id='year-selector'
           onChange={(e) => {dispatch(yearSelected(e.target.value))}}>
           {
-            years.map(year => 
+            years.map(year =>
               <option value={year} key={year}>{year}</option>
             )
           }
