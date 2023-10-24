@@ -2,7 +2,7 @@ import { createReducer, createAction } from '@reduxjs/toolkit';
 
 export interface Item {
   date: string,
-  category?: string,
+  category: string,
   description: string,
   amount: number,
 }
@@ -17,8 +17,8 @@ interface FinanceState {
 const initialState: FinanceState = {
   incomes: [],
   expenses: [],
-  month: '',
-  year: '',
+  month: new Date().getMonth().toString(),
+  year: new Date().getFullYear().toString(),
 }
 
 interface FinanceAction {
