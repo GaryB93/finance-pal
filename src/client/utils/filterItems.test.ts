@@ -7,16 +7,19 @@ describe('filterItems function', () => {
       date: '2023-10-24',
       description: 'An item',
       amount: 320.45,
+      category: 'income',
     },
     {
       date: '2023-10-24',
       description: 'An item',
       amount: 23.56,
+      category: 'income',
     },
     {
       date: '2023-09-23',
       description: 'An item',
       amount: 44.25,
+      category: 'income',
     },
   ];
 
