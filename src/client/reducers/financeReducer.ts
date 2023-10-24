@@ -17,8 +17,8 @@ interface FinanceState {
 const initialState: FinanceState = {
   incomes: [],
   expenses: [],
-  month: '',
-  year: '',
+  month: new Date().getMonth().toString(),
+  year: new Date().getFullYear().toString(),
 }
 
 interface FinanceAction {

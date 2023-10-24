@@ -25,12 +25,6 @@ const Summary = () => {
   const totalExpenses = calculateTotals(expenses, year, month);
 
   useEffect(() => {
-    const today = new Date();
-    dispatch(monthSelected(today.getMonth().toString()));
-    dispatch(yearSelected(today.getFullYear().toString()));
-  }, [dispatch]);
-
-  useEffect(() => {
     const controller = new AbortController();
     axios({
       method: 'get',
