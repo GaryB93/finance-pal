@@ -6,5 +6,5 @@ export const categories = [
   'Food',
   'Insurance',
   'Debt',
-  'Misc.',
+  'Misc',
 ];

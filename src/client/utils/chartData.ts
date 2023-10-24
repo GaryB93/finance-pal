@@ -1,12 +1,10 @@
-import { categories } from "../constants/categories";
-
-export const chartData = () => {
+export const chartData = (categories: Array<string>, totals: Array<number>) => {
   return {
     labels: categories,
     datasets: [
       {
         label: 'Expenses',
-        data: [12, 19, 3, 5, 0, 2, 7, 8],
+        data: totals,
         backgroundColor: [
           'red',
           'blue',
@@ -14,8 +12,8 @@ export const chartData = () => {
           'yellow',
           'purple',
           'gray',
-          'blue',
-          'blue',
+          'orange',
+          'pink',
         ]
       }
     ]

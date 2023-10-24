@@ -11,6 +11,7 @@ import { generateYears } from '../../utils/generateYears';
 import { calculateTotal } from '../../utils/calculateTotal';
 import { filterItems } from '../../utils/filterItems';
 import { monthSelected, yearSelected } from '../../reducers/financeReducer';
+import { categories } from '../../constants/categories';
 
 const Summary = (): JSX.Element => {
   const userId = useAppSelector(state => state.user.userId);
@@ -40,8 +41,10 @@ const Summary = (): JSX.Element => {
     };
   }, [userId, dispatch]);
   
-  const filteredIncome = useMemo(() => filterItems(incomes, month, year), [incomes, month, year]);
-  const filteredExpenses = useMemo(() => filterItems(expenses, month, year), [expenses, month, year]);
+  const filteredIncome = useMemo(() =>
+    filterItems(incomes, month, year), [incomes, month, year]);
+  const filteredExpenses = useMemo(() =>
+    filterItems(expenses, month, year), [expenses, month, year]);
   const totalIncome = calculateTotal(filteredIncome);
   const totalExpenses = calculateTotal(filteredExpenses);
   const years = generateYears(created);
@@ -50,7 +53,7 @@ const Summary = (): JSX.Element => {
     <div className='summary'>
       <Menu />
       <div id='doughnut-container'>
-        <DoughnutChart />
+        <DoughnutChart categories={categories} items={filteredExpenses}/>
       </div>
       <div id='select'>
         <select aria-label={'month'} value={month} id='month-selector'

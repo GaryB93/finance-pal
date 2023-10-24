@@ -2,7 +2,7 @@ import { createReducer, createAction } from '@reduxjs/toolkit';
 
 export interface Item {
   date: string,
-  category?: string,
+  category: string,
   description: string,
   amount: number,
 }
