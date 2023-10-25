@@ -9,6 +9,12 @@ import NewPassword from './NewPassword';
  */
 
 describe('New Password submit form', () => {
+  beforeAll(() => {
+    HTMLDialogElement.prototype.show = vi.fn();
+    HTMLDialogElement.prototype.showModal = vi.fn();
+    HTMLDialogElement.prototype.close = vi.fn();
+  });
+
   test('should render an empty input field with a New Password label', () => {
     renderWithProviders(<NewPassword/>);
     const newPassword = screen.getByLabelText('New Password');

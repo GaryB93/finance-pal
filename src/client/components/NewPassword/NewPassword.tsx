@@ -16,7 +16,7 @@ import Modal from '../Modal/Modal';
 const NewPassword = (): JSX.Element => {
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const userId = useAppSelector(state => state.user.userId);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -121,7 +121,7 @@ const NewPassword = (): JSX.Element => {
         </p>
       </form>
       <Modal
-        isOpen={modalOpen}
+        isOpen={isModalOpen}
         hasCloseBtn={true}
         onClose={handleCloseModal}
       >
