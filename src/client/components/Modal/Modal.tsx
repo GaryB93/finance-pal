@@ -42,12 +42,12 @@ const Modal = ({ isOpen, hasCloseBtn, onClose, children }: ModalProps) => {
 
   return (
     <dialog ref={modalRef} className='modal' onKeyDown={handleKeyDown}>
+      {hasCloseBtn &&
+        <div>
+          <button onClick={handleCloseModal}>X</button>
+        </div>
+      }
       {children}
-      {hasCloseBtn && (
-        <button className='modal-close-btn primary-btn' onClick={handleCloseModal}>
-          Okay
-        </button>
-      )}
     </dialog>
   );
 };

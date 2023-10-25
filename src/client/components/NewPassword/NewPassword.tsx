@@ -63,6 +63,7 @@ const NewPassword = (): JSX.Element => {
   };
 
   const handleCloseModal = () => {
+    setModalOpen(false);
     dispatch(logout);
     navigate('/');
   };
@@ -119,15 +120,13 @@ const NewPassword = (): JSX.Element => {
           Back to <Link to='/'>Login</Link>
         </p>
       </form>
-      { modalOpen && 
-        <Modal
-          isOpen={modalOpen}
-          hasCloseBtn={true}
-          onClose={handleCloseModal}
-        >
-          <p>Password successfully changed. You will now be redirected to the login page.</p>
-        </Modal>
-      }
+      <Modal
+        isOpen={modalOpen}
+        hasCloseBtn={true}
+        onClose={handleCloseModal}
+      >
+        <p>Password successfully changed. You will now be redirected to the login page.</p>
+      </Modal>
     </>
   )
 };

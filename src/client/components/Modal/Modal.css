@@ -10,7 +10,3 @@
     color: var(--grey6);
     width: 400px;
 }
-
-.modal-close-btn {
-    float: right;
-}

@@ -10,7 +10,7 @@ const DetailsList = ({items}: {items: Array<Item>}): JSX.Element => {
       }}
     >
       {items.map(item => 
-        <DetailsListItem item={item} />
+        <DetailsListItem item={item} key={item._id} />
       )}
     </ul>
   )
