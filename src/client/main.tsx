@@ -8,6 +8,7 @@ import RequestPassword from './components/RequestPassword';
 import SecurityQuestion from './components/SecurityQuestion';
 import NewPassword from './components/NewPassword';
 import Summary from './components/Summary';
+import Details from './components/Details';
 import PrivateRoute from './components/PrivateRoute';
 import ErrorPage from './components/ErrorPage';
 import { setupStore } from './store';
@@ -40,9 +41,9 @@ const router = createBrowserRouter([
     element: <PrivateRoute route={<Summary/>}></PrivateRoute>,
   },
   {
-    path: 'summary2',
-    element: <Summary/>,
-  }
+    path: 'details',
+    element: <PrivateRoute route={<Details/>}></PrivateRoute>
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

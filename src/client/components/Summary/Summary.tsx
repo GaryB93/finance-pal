@@ -12,6 +12,7 @@ import { calculateTotal } from '../../utils/calculateTotal';
 import { filterItems } from '../../utils/filterItems';
 import { monthSelected, yearSelected } from '../../reducers/financeReducer';
 import { categories } from '../../constants/categories';
+import { Link } from 'react-router-dom';
 
 const Summary = (): JSX.Element => {
   const userId = useAppSelector(state => state.user.userId);
@@ -51,7 +52,7 @@ const Summary = (): JSX.Element => {
 
   return (
     <div className='summary'>
-      <Menu />
+      {/* <Menu /> */}
       <div id='doughnut-container'>
         <DoughnutChart categories={categories} items={filteredExpenses}/>
       </div>
@@ -88,8 +89,7 @@ const Summary = (): JSX.Element => {
         <span>{(totalIncome - totalExpenses).toFixed(2)}</span>
       </div>
       <div className={'bottom'}>
-        <button>Locked</button>
-        <button>Edit</button>
+        <Link to='/details'>Edit</Link>
       </div>
     </div>
   )
