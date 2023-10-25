@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import './Modal.css';
 
 interface ModalProps {
@@ -10,28 +10,39 @@ interface ModalProps {
 
 const Modal = ({ isOpen, hasCloseBtn, onClose, children }: ModalProps) => {
   const modalRef = useRef<HTMLDialogElement | null>(null);
-  const [isModalOpen, setModalOpen] = useState(isOpen);
-
-  useEffect(() => {
-    setModalOpen(isOpen);
-  }, [isOpen]);
+  // const [isModalOpen, setModalOpen] = useState(isOpen);
 
   useEffect(() => {
     const modalElement = modalRef.current;
     if (modalElement) {
-      if (isModalOpen) {
+      if (isOpen) {
         modalElement.showModal();
       } else {
         modalElement.close();
       }
     }
-  }, [isModalOpen]);
+  }, [isOpen]);
+
+  // useEffect(() => {
+  //   setModalOpen(isOpen);
+  // }, [isOpen]);
+
+  // useEffect(() => {
+  //   const modalElement = modalRef.current;
+  //   if (modalElement) {
+  //     if (isModalOpen) {
+  //       modalElement.showModal();
+  //     } else {
+  //       modalElement.close();
+  //     }
+  //   }
+  // }, [isModalOpen]);
 
   const handleCloseModal = () => {
     if (onClose) {
       onClose();
     }
-    setModalOpen(false);
+    // setModalOpen(false);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDialogElement>) => {
