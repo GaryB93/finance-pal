@@ -10,3 +10,14 @@
     color: var(--grey6);
     width: 400px;
 }
+
+.modal div:first-of-type{
+    height: 2rem;
+}
+
+.modal div:first-of-type button {
+   float: right;
+   background: none;
+   border: none;
+   color: var(--grey4);
+}

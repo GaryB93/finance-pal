@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react';
+import { GrClose } from 'react-icons/gr';
 import './Modal.css';
 
 interface ModalProps {
@@ -10,13 +11,16 @@ interface ModalProps {
 
 const Modal = ({ isOpen, hasCloseBtn, onClose, children }: ModalProps) => {
   const modalRef = useRef<HTMLDialogElement | null>(null);
+  const closeRef = useRef<HTMLButtonElement | null>(null);
   // const [isModalOpen, setModalOpen] = useState(isOpen);
 
   useEffect(() => {
     const modalElement = modalRef.current;
+    const closeBtnElement = closeRef.current;
     if (modalElement) {
       if (isOpen) {
         modalElement.showModal();
+        closeBtnElement?.blur();
       } else {
         modalElement.close();
       }
@@ -55,7 +59,7 @@ const Modal = ({ isOpen, hasCloseBtn, onClose, children }: ModalProps) => {
     <dialog ref={modalRef} className='modal' onKeyDown={handleKeyDown}>
       {hasCloseBtn &&
         <div>
-          <button onClick={handleCloseModal}>X</button>
+          <button onClick={handleCloseModal} aria-label='close' ref={closeRef}><GrClose/></button>
         </div>
       }
       {children}
