@@ -1,10 +1,11 @@
 import { createReducer, createAction } from '@reduxjs/toolkit';
 
 export interface Item {
-  date: string,
-  category: string,
-  description: string,
-  amount: number,
+  _id: string;
+  date: string;
+  category: string;
+  description: string;
+  amount: number;
 }
 
 interface FinanceState {
