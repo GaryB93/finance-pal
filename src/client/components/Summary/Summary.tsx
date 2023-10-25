@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import DoughnutChart from "../DoughnutChart";
-import Menu from '../Menu';
+// import Menu from '../Menu';
 import './Summary.css';
 import axios from 'axios';
 import { ENDPOINTS } from '../../constants/endpoints';
