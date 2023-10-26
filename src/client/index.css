@@ -49,18 +49,20 @@ body {
 }
 
 h1 {
-  font-size: 3em;
+  font-size: 2rem;
   line-height: 1.1;
 }
 
-input, button, select {
+input, select {
   box-sizing: border-box;
   padding: 0.5rem;
   font-size: 1rem;
-  /* border-radius: .3rem; */
 }
 
 button {
+  box-sizing: border-box;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
   cursor: pointer;
 }
 
@@ -88,36 +90,9 @@ button {
   margin: .5rem 0;
 }
 
-/* login forms */
-.login {
-  display: flex;
-  flex-direction: column;
-  padding: 2rem;
-  text-align: center;
-  height: 100vh;
-  max-width: 425px;
-}
-
-.login label {
-  align-self: flex-start;
-  margin-top: 1rem;
-}
-
-.login button {
-  margin: 2rem 0;
-}
-
-.login a {
+a {
   color: var(--link);
 }
-
-
-@media screen and (min-width: 426px) {
-  .login {
-    margin: 0 auto;
-  }
-}
-
 
 @media (prefers-color-scheme: light) {
   :root {

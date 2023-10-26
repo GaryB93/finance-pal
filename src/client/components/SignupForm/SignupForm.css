@@ -1,0 +1,36 @@
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  max-width: 425px;
+}
+
+.signup-form input, .signup-form select {
+  margin-bottom: 1rem;
+}
+
+.signup-form h1, .signup-form p {
+  text-align: center;
+}
+
+.signup-form button {
+  margin-top: 1rem;
+}
+
+#password-match {
+  text-align: left;
+  font-size: .8rem;
+  margin: 0;
+  padding: .2rem;
+}
+
+#password-match svg {
+  margin-right: 5px;
+}
+
+@media screen and (min-width: 426px) {
+  .signup-form {
+    width: 425px;
+    margin: 0 auto;
+  }
+}

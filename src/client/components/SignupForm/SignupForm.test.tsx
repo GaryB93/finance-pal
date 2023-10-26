@@ -1,7 +1,7 @@
 import { screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from '../../__tests__/test-utils';
-import Signup from './Signup';
+import SignupForm from './SignupForm';
 import { securityQuestions } from '../../constants/securityQuestions';
 
 /**
@@ -12,13 +12,13 @@ import { securityQuestions } from '../../constants/securityQuestions';
 describe('Signup form', () => {
 
   test('input field with username label renders empty', () => {
-    renderWithProviders(<Signup/>);
+    renderWithProviders(<SignupForm />);
     const usernameInput = screen.getByLabelText('Username');
     expect(usernameInput).toHaveValue('');
   });
 
   test('user input changes value of username input field', () => {
-    renderWithProviders(<Signup/>);
+    renderWithProviders(<SignupForm />);
     const usernameInput = screen.getByRole('textbox', {name: 'Username'});
     const newInput = 'myUsername';
     fireEvent.change(usernameInput, {target: {value: newInput}});
@@ -26,13 +26,13 @@ describe('Signup form', () => {
   });
 
   test('input field with password label renders empty', () => {
-    renderWithProviders(<Signup/>);
+    renderWithProviders(<SignupForm />);
     const passwordInput = screen.getByLabelText('Password');
     expect(passwordInput).toHaveValue('');
   });
 
   test('user clicking on password input field should display tooltip', async () => {
-    renderWithProviders(<Signup/>);
+    renderWithProviders(<SignupForm />);
     const user = userEvent.setup();
     const passwordInput = screen.getByLabelText('Password');
     await user.click(passwordInput);
@@ -41,7 +41,7 @@ describe('Signup form', () => {
   });
 
   test('user input changes value of password input field', () => {
-    renderWithProviders(<Signup/>);
+    renderWithProviders(<SignupForm />);
     const passwordInput = screen.getByLabelText('Password');
     const newInput = 'myPassword';
     fireEvent.change(passwordInput, {target: {value : newInput}});
@@ -49,13 +49,13 @@ describe('Signup form', () => {
   });
 
   test('input field with confirm password label renders empty', () => {
-    renderWithProviders(<Signup/>);
+    renderWithProviders(<SignupForm />);
     const confirmPassword = screen.getByLabelText('Confirm Password');
     expect(confirmPassword).toHaveValue('');
   });
 
   test('user focusing on confirm password input field should display tooltip', async () => {
-    renderWithProviders(<Signup/>);
+    renderWithProviders(<SignupForm />);
     const user = userEvent.setup();
     const confirmPassword = screen.getByLabelText('Confirm Password');
     await user.click(confirmPassword);
@@ -64,7 +64,7 @@ describe('Signup form', () => {
   });
 
   test('user input changes value of confirm password input field', () => {
-    renderWithProviders(<Signup/>);
+    renderWithProviders(<SignupForm />);
     const confirmPassword = screen.getByLabelText('Confirm Password');
     const newInput = 'confirmPassword';
     fireEvent.change(confirmPassword, {target: {value: newInput}});
@@ -72,19 +72,19 @@ describe('Signup form', () => {
   });
 
   test('select field with security questions label renders with correct default option', () => {
-    renderWithProviders(<Signup/>);
+    renderWithProviders(<SignupForm />);
     const question = screen.getByLabelText('Security Question');
     expect(question).toHaveValue(securityQuestions[0]);
   });
 
   test('select field renders with correct number of options', () => {
-    renderWithProviders(<Signup/>);
+    renderWithProviders(<SignupForm />);
     const questions = screen.getAllByRole('option');
     expect(questions.length).toBe(securityQuestions.length);
   });
 
   test('user input changes value of security question select field', () => {
-    renderWithProviders(<Signup/>);
+    renderWithProviders(<SignupForm />);
     const question = screen.getByRole('combobox', {name: 'Security Question'});
     fireEvent.change(question, {target: {value: securityQuestions[2]}});
     const option = (screen.getByRole('option', {name: securityQuestions[2]})) as HTMLOptionElement;
@@ -94,13 +94,13 @@ describe('Signup form', () => {
   });
 
   test('input field with answer label renders empty', () => {
-    renderWithProviders(<Signup/>);
+    renderWithProviders(<SignupForm />);
     const answer = screen.getByLabelText('Answer');
     expect(answer).toHaveValue('');
   });
 
   test('user input changes value of answer input field', () => {
-    renderWithProviders(<Signup/>);
+    renderWithProviders(<SignupForm />);
     const answer = screen.getByRole('textbox', {name: 'Answer'});
     const newInput = 'myAnswer';
     fireEvent.change(answer, {target: {value: newInput}});
@@ -108,7 +108,7 @@ describe('Signup form', () => {
   });
 
   test('renders a signup button', () => {
-    renderWithProviders(<Signup/>);
+    renderWithProviders(<SignupForm />);
     const signup = screen.getByRole('button', {name: 'Sign up'});
     expect(signup).toBeVisible();
   });
@@ -116,7 +116,7 @@ describe('Signup form', () => {
   test('user not picking a security question but filling all other' +
     'fields correctly and clicking the "Sign up" button should display' +
     'an error message', () => {
-      renderWithProviders(<Signup/>);
+      renderWithProviders(<SignupForm />);
     const username = screen.getByRole('textbox', {name: 'Username'});
     fireEvent.change(username, {target: {value: 'user'}});
     const password = screen.getByLabelText('Password');
@@ -132,7 +132,7 @@ describe('Signup form', () => {
   });
 
   test('renders a link to go back to login page', () => {
-    renderWithProviders(<Signup/>);
+    renderWithProviders(<SignupForm />);
     const loginLink = screen.getByRole('link', {name: 'Login'});
     expect(loginLink).toBeVisible();
   });
