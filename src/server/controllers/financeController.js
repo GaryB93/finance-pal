@@ -11,6 +11,15 @@ const financeController = {
       return next(err);
     }
   },
+
+  saveItem: async (req, res, next) => {
+    try {
+      console.log(req.body);
+      return next();
+    } catch (err) {
+      return next(err);
+    }
+  },
 };
 
 export default financeController;

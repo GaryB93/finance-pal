@@ -1,15 +1,25 @@
 import { useState, useEffect } from "react";
 import { Item } from "../../reducers/financeReducer";
 import { categories } from "../../constants/categories";
+import { formatDate } from "../../utils/formatDate";
 import './ItemForm.css';
 
-const ItemForm = ({ item, handleSubmit }: { item: Item, handleSubmit: () => void }) => {
+const ItemForm = ({ item, handleSaveItem }:
+  { item: Item, handleSaveItem: (item: Item) => void }) => {
   const [inputs, setInputs] = useState({
+    _id: item._id,
     description: item.description,
     category: item.category,
     amount: item.amount,
-    date: item.date,
+    date: formatDate(new Date(item.date)),
   });
+
+  useEffect(() => {
+    setInputs({
+      ...item,
+      date: formatDate(new Date(item.date)),
+    });
+  }, [item]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setInputs({
@@ -18,9 +28,11 @@ const ItemForm = ({ item, handleSubmit }: { item: Item, handleSubmit: () => void
     });
   };
 
-  useEffect(() => {
-    setInputs(item);
-  }, [item]);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: Validate and sanitize user inputs
+    handleSaveItem(inputs);
+  };
 
   return (
     <form id='item-form'>
@@ -65,7 +77,7 @@ const ItemForm = ({ item, handleSubmit }: { item: Item, handleSubmit: () => void
       <button
         className='primary-btn'
         type='submit'
-        onClick={() => handleSubmit()}>
+        onClick={handleSubmit}>
         Save
       </button>
     </form>

@@ -16,14 +16,14 @@ userRouter.post('/signup',
   }
 );
 
-userRouter.get('/securityQuestion/:username',
+userRouter.get('/security_question/:username',
   userController.verifyUsername,
   (req, res) => {
     res.status(200).json(res.locals.user);
   }
 );
 
-userRouter.post('/securityAnswer',
+userRouter.post('/security_answer',
   userController.checkSecurityAnswer,
   (req, res) => {
     res.status(200).json(res.locals.message);
