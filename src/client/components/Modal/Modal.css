@@ -11,6 +11,13 @@
     width: 400px;
 }
 
-.modal-close-btn {
-    float: right;
+.modal div:first-of-type{
+    height: 2rem;
+}
+
+.modal div:first-of-type button {
+   float: right;
+   background: none;
+   border: none;
+   color: var(--grey4);
 }

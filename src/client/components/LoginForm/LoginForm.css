@@ -1,0 +1,25 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  max-width: 425px;
+}
+
+.login input {
+  margin-bottom: 1rem;
+}
+
+.login h1, .login p {
+  text-align: center;
+}
+
+.login button {
+  margin-top: 1rem;
+}
+
+@media screen and (min-width: 426px) {
+  .login {
+    width: 425px;
+    margin: 0 auto;
+  }
+}

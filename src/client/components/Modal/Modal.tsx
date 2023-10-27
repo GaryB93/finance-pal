@@ -1,4 +1,5 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
+import { GrClose } from 'react-icons/gr';
 import './Modal.css';
 
 interface ModalProps {
@@ -10,28 +11,42 @@ interface ModalProps {
 
 const Modal = ({ isOpen, hasCloseBtn, onClose, children }: ModalProps) => {
   const modalRef = useRef<HTMLDialogElement | null>(null);
-  const [isModalOpen, setModalOpen] = useState(isOpen);
-
-  useEffect(() => {
-    setModalOpen(isOpen);
-  }, [isOpen]);
+  const closeRef = useRef<HTMLButtonElement | null>(null);
+  // const [isModalOpen, setModalOpen] = useState(isOpen);
 
   useEffect(() => {
     const modalElement = modalRef.current;
+    const closeBtnElement = closeRef.current;
     if (modalElement) {
-      if (isModalOpen) {
+      if (isOpen) {
         modalElement.showModal();
+        closeBtnElement?.blur();
       } else {
         modalElement.close();
       }
     }
-  }, [isModalOpen]);
+  }, [isOpen]);
+
+  // useEffect(() => {
+  //   setModalOpen(isOpen);
+  // }, [isOpen]);
+
+  // useEffect(() => {
+  //   const modalElement = modalRef.current;
+  //   if (modalElement) {
+  //     if (isModalOpen) {
+  //       modalElement.showModal();
+  //     } else {
+  //       modalElement.close();
+  //     }
+  //   }
+  // }, [isModalOpen]);
 
   const handleCloseModal = () => {
     if (onClose) {
       onClose();
     }
-    setModalOpen(false);
+    // setModalOpen(false);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDialogElement>) => {
@@ -42,12 +57,12 @@ const Modal = ({ isOpen, hasCloseBtn, onClose, children }: ModalProps) => {
 
   return (
     <dialog ref={modalRef} className='modal' onKeyDown={handleKeyDown}>
+      {hasCloseBtn &&
+        <div>
+          <button onClick={handleCloseModal} aria-label='close' ref={closeRef}><GrClose/></button>
+        </div>
+      }
       {children}
-      {hasCloseBtn && (
-        <button className='modal-close-btn primary-btn' onClick={handleCloseModal}>
-          Okay
-        </button>
-      )}
     </dialog>
   );
 };

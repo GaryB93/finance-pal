@@ -8,13 +8,13 @@ import PasswordRequirements from '../PasswordRequirements/PasswordRequirements';
 import axios from 'axios';
 import { ENDPOINTS } from '../../constants/endpoints';
 import { securityQuestions } from '../../constants/securityQuestions';
-import './Signup.css';
+import './SignupForm.css';
 
 /**
  * TODO: Change password tooltip icons to checkboxes for accessibility?
  */
 
-const Signup = (): JSX.Element => {
+const SignupForm = (): JSX.Element => {
   
   // form input fields
   const [form, setForm] = useState({
@@ -108,8 +108,8 @@ const Signup = (): JSX.Element => {
   };
 
   return (
-    <form className='login' onSubmit={handleSignup}>
-      <h1>FinancePal</h1>
+    <form className='signup-form' onSubmit={handleSignup}>
+      <h1>Sign up</h1>
       <label htmlFor='username'>Username</label>
       <input
         id='username'
@@ -222,4 +222,4 @@ const Signup = (): JSX.Element => {
   )
 };
 
-export default Signup;
+export default SignupForm;

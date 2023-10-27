@@ -1,10 +1,23 @@
 import { Item } from "../../../reducers/financeReducer";
+import { Dispatch, SetStateAction } from 'react';
 import './DetailsListItem.css';
 
-const DetailsListItem = ({item}: {item: Item}) => {
+interface DetailsListItemProps {
+  item: Item;
+  setSelectedItem: Dispatch<SetStateAction<Item>>;
+  setModalOpen: Dispatch<SetStateAction<boolean>>;
+}
+
+const DetailsListItem = ({ item, setSelectedItem, setModalOpen }: DetailsListItemProps ): JSX.Element => {
+
+    const handleClick = () => {
+      setSelectedItem(item);
+      setModalOpen(true);
+    };
+
   return (
-    <li key={item._id} className='list-item'>
-      <button>
+    <li className='list-item'>
+      <button onClick={handleClick}>
         <span>{item.description}</span>
         <span>{item.amount}</span>
       </button>

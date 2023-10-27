@@ -4,8 +4,9 @@ import { useAppDispatch } from '../../hooks';
 import { login } from '../../reducers/userReducer';
 import { ENDPOINTS } from '../../constants/endpoints';
 import axios from 'axios';
+import './LoginForm.css';
 
-const Login = (): JSX.Element => {
+const LoginForm = (): JSX.Element => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [invalidUser, setInvalidUser] = useState<boolean>(false);
@@ -42,14 +43,13 @@ const Login = (): JSX.Element => {
 
   return (
     <form className='login' onSubmit={handleLogin}>
-      <h1>FinancePal</h1>
+      <h1>Welcome</h1>
       <label htmlFor='username'>Username</label>
       <input
         id='username'
         type='text'
         value={username}
-        autoComplete='true'
-        autoFocus
+        autoComplete='off'
         required
         onChange={(e)=>{
           setInvalidUser(false);
@@ -69,8 +69,8 @@ const Login = (): JSX.Element => {
         }}
       />
 
-      <p style={{ textAlign: 'left', margin: '0.5rem 0'}}>
-        <Link to={'request_password'}>Forgot Password?</Link>
+      <p>
+        <Link to={'change_password'}>Forgot Password?</Link>
       </p>
 
       { invalidUser &&
@@ -88,4 +88,4 @@ const Login = (): JSX.Element => {
   );
 };
 
-export default Login;
+export default LoginForm;

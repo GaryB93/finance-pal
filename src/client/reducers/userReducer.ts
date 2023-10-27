@@ -23,7 +23,7 @@ interface UserAction {
 
 export const login = createAction<UserAction>('user/login');
 export const logout = createAction<UserAction>('user/logout');
-export const verifyUser = createAction<UserAction>('user/hasAccount');
+export const verifiedUser = createAction<UserAction>('user/hasAccount');
 
 const userReducer = createReducer(initialState, (builder) => {
   builder
@@ -39,7 +39,7 @@ const userReducer = createReducer(initialState, (builder) => {
       state.created = '';
       state.loggedIn = false;
     })
-    .addCase(verifyUser, (state, action) => {
+    .addCase(verifiedUser, (state, action) => {
       state.userId = action.payload.userId;
       state.username = action.payload.username;
     })

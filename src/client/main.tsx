@@ -2,15 +2,13 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Login from './components/Login';
-import Signup from './components/Signup';
-import RequestPassword from './components/RequestPassword';
-import SecurityQuestion from './components/SecurityQuestion';
-import NewPassword from './components/NewPassword';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import ChangePassword from './pages/ChangePassword';
 import Summary from './components/Summary';
 import Details from './components/Details';
 import PrivateRoute from './components/PrivateRoute';
-import ErrorPage from './components/ErrorPage';
+import ErrorPage from './pages/ErrorPage';
 import { setupStore } from './store';
 import './index.css';
 
@@ -25,16 +23,8 @@ const router = createBrowserRouter([
     element: <Signup />,
   },
   {
-    path: 'request_password',
-    element: <RequestPassword/>,
-  },
-  {
-    path: 'security_question',
-    element: <PrivateRoute route={<SecurityQuestion/>}></PrivateRoute>,
-  },
-  {
-    path: 'new_password',
-    element: <PrivateRoute route={<NewPassword/>}></PrivateRoute>,
+    path: 'change_password',
+    element: <ChangePassword />,
   },
   {
     path: 'summary',
