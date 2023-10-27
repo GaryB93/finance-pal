@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import DoughnutChart from "../DoughnutChart";
+import DoughnutChart from "../../components/DoughnutChart";
 // import Menu from '../Menu';
 import './Summary.css';
 import axios from 'axios';
@@ -48,6 +48,7 @@ const Summary = (): JSX.Element => {
     filterItems(expenses, month, year), [expenses, month, year]);
   const totalIncome = calculateTotal(filteredIncome);
   const totalExpenses = calculateTotal(filteredExpenses);
+  const total = (totalIncome - totalExpenses).toFixed(2);
   const years = generateYears(created);
 
   return (
@@ -86,7 +87,7 @@ const Summary = (): JSX.Element => {
       <hr style={{ width: '90%'}}/>
       <div className={'month-summaries'}>
         <span>Total:</span>
-        <span>{(totalIncome - totalExpenses).toFixed(2)}</span>
+        <span>{total}</span>
       </div>
       <div className={'bottom'}>
         <Link to='/details'>Edit</Link>

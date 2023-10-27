@@ -2,10 +2,10 @@ import { useMemo, useState } from "react";
 import { useAppSelector } from "../../hooks";
 import { months } from "../../constants/months";
 import { filterItems } from "../../utils/filterItems";
-import DetailsList from "./DetailsList";
+import DetailsList from "../../components/DetailsList";
 import { Link } from "react-router-dom";
-import Modal from "../Modal/Modal";
-import ItemForm from "../ItemForm";
+import Modal from "../../components/Modal/Modal";
+import ItemForm from "../../components/ItemForm";
 import './Details.css';
 
 const Details = (): JSX.Element => {
@@ -72,7 +72,6 @@ const Details = (): JSX.Element => {
       >
         <ItemForm item={selectedItem} handleSubmit={handleDetails}/>
       </Modal>
-      <p>{selectedItem.description}</p>
     </div>
   );
 };

@@ -2,12 +2,12 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import PrivateRoute from './components/PrivateRoute';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ChangePassword from './pages/ChangePassword';
-import Summary from './components/Summary';
-import Details from './components/Details';
-import PrivateRoute from './components/PrivateRoute';
+import Summary from './pages/Summary';
+import Details from './pages/Details';
 import ErrorPage from './pages/ErrorPage';
 import { setupStore } from './store';
 import './index.css';
@@ -28,11 +28,11 @@ const router = createBrowserRouter([
   },
   {
     path: 'summary',
-    element: <PrivateRoute route={<Summary/>}></PrivateRoute>,
+    element: <PrivateRoute route={<Summary />}></PrivateRoute>,
   },
   {
     path: 'details',
-    element: <PrivateRoute route={<Details/>}></PrivateRoute>
+    element: <PrivateRoute route={<Details />}></PrivateRoute>,
   },
 ]);
 

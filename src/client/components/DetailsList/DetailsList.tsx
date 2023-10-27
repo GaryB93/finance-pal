@@ -1,5 +1,5 @@
 import { SetStateAction } from "react";
-import { Item } from "../../../reducers/financeReducer";
+import { Item } from "../../reducers/financeReducer";
 import DetailsListItem from "../DetailsListItem";
 import { Dispatch } from "react";
 

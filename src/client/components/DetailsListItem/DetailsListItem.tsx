@@ -1,4 +1,4 @@
-import { Item } from "../../../reducers/financeReducer";
+import { Item } from "../../reducers/financeReducer";
 import { Dispatch, SetStateAction } from 'react';
 import './DetailsListItem.css';
 
