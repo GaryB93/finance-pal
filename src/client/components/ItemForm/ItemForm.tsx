@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Item } from "../../reducers/financeReducer";
 import { categories } from "../../constants/categories";
 import './ItemForm.css';
 
-const ItemForm = ({ item, handleSubmit }: { item: Item | null, handleSubmit: () => void }) => {
+const ItemForm = ({ item, handleSubmit }: { item: Item, handleSubmit: () => void }) => {
   const [inputs, setInputs] = useState({
-    description: item?.description || '',
-    category: item?.category || '',
-    amount: item?.amount || 0,
-    date: item?.date || '',
+    description: item.description,
+    category: item.category,
+    amount: item.amount,
+    date: item.date,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -16,8 +16,11 @@ const ItemForm = ({ item, handleSubmit }: { item: Item | null, handleSubmit: () 
       ...inputs,
       [e.target.id]: e.target.value
     });
-    console.log(e.target.value);
   };
+
+  useEffect(() => {
+    setInputs(item);
+  }, [item]);
 
   return (
     <form id='item-form'>
@@ -62,7 +65,7 @@ const ItemForm = ({ item, handleSubmit }: { item: Item | null, handleSubmit: () 
       <button
         className='primary-btn'
         type='submit'
-        onClick={() => handleSubmit(item?._id, inputs)}>
+        onClick={() => handleSubmit()}>
         Save
       </button>
     </form>

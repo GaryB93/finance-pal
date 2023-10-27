@@ -2,11 +2,11 @@ import { useMemo, useState } from "react";
 import { useAppSelector } from "../../hooks";
 import { months } from "../../constants/months";
 import { filterItems } from "../../utils/filterItems";
-import './Details.css';
 import DetailsList from "./DetailsList";
 import { Link } from "react-router-dom";
 import Modal from "../Modal/Modal";
 import ItemForm from "../ItemForm";
+import './Details.css';
 
 const Details = (): JSX.Element => {
   const incomes = useAppSelector(state => state.finance.incomes);
@@ -15,6 +15,13 @@ const Details = (): JSX.Element => {
   const year = useAppSelector(state => state.finance.year);
   // const dispatch = useAppDispatch();
   const [type, setType] = useState('expenses');
+  const [selectedItem, setSelectedItem] = useState({
+    _id: '',
+    description: '',
+    category: '',
+    amount: 0,
+    date: '',
+  });
   const [isModalOpen, setModalOpen] = useState(false);
 
   const filteredIncome = useMemo(() =>
@@ -28,7 +35,7 @@ const Details = (): JSX.Element => {
 
   const handleCloseModal = () => {
     setModalOpen(false);
-  }
+  };
 
   return (
     <div className='details'>
@@ -37,8 +44,20 @@ const Details = (): JSX.Element => {
         <button onClick={() => setType('income')}>Income</button>
         <button onClick={() => setType('expenses')}>Expenses</button>
       </div>
-      {type === 'expenses' && <DetailsList items={filteredExpenses}/>}
-      {type === 'income' && <DetailsList items={filteredIncome}/>}
+      { type === 'expenses' &&
+        <DetailsList
+          items={filteredExpenses}
+          setSelectedItem={setSelectedItem}
+          setModalOpen={setModalOpen}
+        />
+      }
+      { type === 'income' &&
+        <DetailsList
+          items={filteredIncome}
+          setSelectedItem={setSelectedItem}
+          setModalOpen={setModalOpen}
+        />
+      }
       <p>
         Select an item to edit
       </p>
@@ -51,8 +70,9 @@ const Details = (): JSX.Element => {
         hasCloseBtn={true}
         onClose={handleCloseModal}
       >
-        <ItemForm item={null} handleSubmit={handleDetails}/>
+        <ItemForm item={selectedItem} handleSubmit={handleDetails}/>
       </Modal>
+      <p>{selectedItem.description}</p>
     </div>
   );
 };
