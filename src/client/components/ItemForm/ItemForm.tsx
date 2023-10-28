@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Item } from "../../reducers/financeReducer";
-import { categories } from "../../constants/categories";
+import { expenseCategories, incomeCategories } from "../../constants/categories";
 import { formatDate } from "../../utils/formatDate";
 import './ItemForm.css';
 
-const ItemForm = ({ item, handleSaveItem }:
-  { item: Item, handleSaveItem: (item: Item) => void }) => {
+const ItemForm = ({ item, handleSaveItem, type }:
+  { item: Item, handleSaveItem: (item: Item) => void, type: string }) => {
   const [inputs, setInputs] = useState({
     _id: item._id,
     description: item.description,
@@ -13,6 +13,7 @@ const ItemForm = ({ item, handleSaveItem }:
     amount: item.amount,
     date: formatDate(new Date(item.date)),
   });
+  const [errMessage, setErrMessage] = useState('');
 
   useEffect(() => {
     setInputs({
@@ -21,8 +22,11 @@ const ItemForm = ({ item, handleSaveItem }:
     });
   }, [item]);
 
+  const categories = type === 'expense' ? expenseCategories : incomeCategories;
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setInputs({
+    setErrMessage('');
+      setInputs({
       ...inputs,
       [e.target.id]: e.target.value
     });
@@ -30,13 +34,21 @@ const ItemForm = ({ item, handleSaveItem }:
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Validate and sanitize user inputs
-    handleSaveItem(inputs);
+    if (inputs.description === '') {
+      setErrMessage('Please enter a description');
+    } else if (inputs.amount <= 0) {
+      setErrMessage('Please enter an amount greater than 0');
+    } else {
+      handleSaveItem({
+        ...inputs,
+        description: inputs.description.trim(),
+      });
+    }
   };
 
   return (
     <form id='item-form'>
-      <h1>Item Details</h1>
+      <h1>{type === 'expense' ? 'Expense' : 'Income'} Details</h1>
       <label htmlFor='description'>Description</label>
       <input
         id='description'
@@ -52,8 +64,8 @@ const ItemForm = ({ item, handleSaveItem }:
         value={inputs.category}
         onChange={handleChange}
       >
-        {categories.map(category =>
-          <option value={category} key={category}>{category}</option>
+        { categories.map(category =>
+            <option value={category} key={category}>{category}</option>
         )}
       </select>
 
@@ -73,6 +85,11 @@ const ItemForm = ({ item, handleSaveItem }:
         value={inputs.date}
         onChange={handleChange}
       />
+
+      { errMessage !== '' &&
+        <p className='error-message' role='alert'>
+          { errMessage }
+        </p> }
 
       <button
         className='primary-btn'
