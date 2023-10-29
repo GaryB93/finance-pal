@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Item } from "../../reducers/financeReducer";
 import { expenseCategories, incomeCategories } from "../../constants/categories";
 import { formatDate } from "../../utils/formatDate";
+import { addTimeZoneOffset } from "../../utils/addTimeZoneOffset";
 import './ItemForm.css';
 
 const ItemForm = ({ item, handleSaveItem, type }:
@@ -41,6 +42,7 @@ const ItemForm = ({ item, handleSaveItem, type }:
     } else {
       handleSaveItem({
         ...inputs,
+        date: addTimeZoneOffset(new Date(inputs.date)),
         description: inputs.description.trim(),
       });
     }

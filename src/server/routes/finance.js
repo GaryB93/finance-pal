@@ -12,7 +12,7 @@ financeRouter.get('/:userId',
 financeRouter.post('/item',
   financeController.saveItem,
   (req, res) => {
-    res.status(200).send('success');
+    res.status(200).json(res.locals.items);
   }
 );
 

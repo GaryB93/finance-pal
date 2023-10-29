@@ -1,14 +1,13 @@
 import { useMemo, useState } from "react";
-import { useAppSelector } from "../../hooks";
+import { useAppSelector, useAppDispatch } from "../../hooks";
 import { months } from "../../constants/months";
 import { filterItems } from "../../utils/filterItems";
 import DetailsList from "../../components/DetailsList";
 import { Link } from "react-router-dom";
 import Modal from "../../components/Modal/Modal";
 import ItemForm from "../../components/ItemForm";
-import { Item } from "../../reducers/financeReducer";
+import { Item, financesFetched } from "../../reducers/financeReducer";
 import { ENDPOINTS } from "../../constants/endpoints";
-import { formatDate } from "../../utils/formatDate";
 import { expenseCategories, incomeCategories } from "../../constants/categories";
 import axios from "axios";
 import './Details.css';
@@ -19,7 +18,7 @@ const Details = (): JSX.Element => {
   const expenses = useAppSelector(state => state.finance.expenses);
   const month = useAppSelector(state => state.finance.month);
   const year = useAppSelector(state => state.finance.year);
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const [type, setType] = useState('expense');
   const categories = type === 'expense' ? expenseCategories : incomeCategories;
   const [selectedItem, setSelectedItem] = useState({
@@ -27,9 +26,12 @@ const Details = (): JSX.Element => {
     description: '',
     category: categories[0],
     amount: 0,
-    date: formatDate(new Date()),
+    date: new Date().toISOString(),
   });
   const [isModalOpen, setModalOpen] = useState(false);
+
+  // console.log(expenses[1].date);
+  // console.log(selectedItem.date);
 
   const filteredIncome = useMemo(() =>
     filterItems(incomes, month, year), [incomes, month, year]);
@@ -47,7 +49,7 @@ const Details = (): JSX.Element => {
       }
     })
     .then(res => {
-      console.log(res.data);
+      dispatch(financesFetched(res.data));
       handleCloseModal();
     })
     .catch(err => {
@@ -61,7 +63,7 @@ const Details = (): JSX.Element => {
       description: '',
       category: categories[0],
       amount: 0,
-      date: formatDate(new Date()),
+      date: new Date().toISOString(),
     })
     setModalOpen(false);
   };

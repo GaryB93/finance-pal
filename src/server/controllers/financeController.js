@@ -14,15 +14,15 @@ const financeController = {
 
   saveItem: async (req, res, next) => {
     const { userId, type, item } = req.body;
+    const newItem = {
+      date: item.date,
+      description: item.description,
+      category: item.category,
+      amount: item.amount,
+    };
     try {
       let user;
       if (item._id === '') {
-        const newItem = {
-          date: item.date,
-          description: item.description,
-          category: item.category,
-          amount: item.amount,
-        };
         if (type === 'expense') {
           user = await User.findOneAndUpdate(
             { _id: userId },
@@ -38,13 +38,17 @@ const financeController = {
         if (type === 'expense') {
           user = await User.findOneAndUpdate(
             { _id: userId },
-            { $set: },
-            { returnDocument: 'after', lean: true }).exec();
+            { $set: { 'expenses.$[item]': item } },
+            { arrayFilters: [{ 'item._id': item._id }],
+              returnDocument: 'after',
+              lean: true }).exec();
         } else {
           user = await User.findOneAndUpdate(
             { _id: userId },
-            { },
-            { returnDocument: 'after', lean: true }).exec();
+            { $set: { 'incomes.$[item]': item } },
+            { arrayFilters: [{ 'item._id': item._id }],
+              returnDocument: 'after',
+              lean: true }).exec();
         }
       }
       res.locals.items = {
