@@ -22,6 +22,7 @@ const userSchema = new mongoose.Schema({
   securityAnswer: { type: String, required: true },
   incomes: [{
     date: { type: Date, required: true, default: new Date() },
+    category: { type: String },
     description: { type: String, required: true },
     amount: { type: Number, required: true },
   }],

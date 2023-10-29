@@ -1,4 +1,4 @@
-export const categories = [
+export const expenseCategories = [
   'Housing',
   'Transportation',
   'Utilities',
@@ -6,5 +6,10 @@ export const categories = [
   'Food',
   'Insurance',
   'Debt',
+  'Misc',
+];
+
+export const incomeCategories= [
+  'Pay',
   'Misc',
 ];

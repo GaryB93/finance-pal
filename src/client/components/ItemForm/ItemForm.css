@@ -7,6 +7,10 @@
   font-size: 1.5rem;
 }
 
+#item-form input, #item-form select {
+  margin-bottom: 1rem;
+}
+
 .remove-arrows::-webkit-outer-spin-button,
 .remove-arrows::-webkit-inner-spin-button {
   -webkit-appearance: none;

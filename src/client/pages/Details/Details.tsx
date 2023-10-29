@@ -1,39 +1,70 @@
 import { useMemo, useState } from "react";
-import { useAppSelector } from "../../hooks";
+import { useAppSelector, useAppDispatch } from "../../hooks";
 import { months } from "../../constants/months";
 import { filterItems } from "../../utils/filterItems";
-import DetailsList from "./DetailsList";
+import DetailsList from "../../components/DetailsList";
 import { Link } from "react-router-dom";
-import Modal from "../Modal/Modal";
-import ItemForm from "../ItemForm";
+import Modal from "../../components/Modal/Modal";
+import ItemForm from "../../components/ItemForm";
+import { Item, financesFetched } from "../../reducers/financeReducer";
+import { ENDPOINTS } from "../../constants/endpoints";
+import { expenseCategories, incomeCategories } from "../../constants/categories";
+import axios from "axios";
 import './Details.css';
 
 const Details = (): JSX.Element => {
+  const userId = useAppSelector(state => state.user.userId);
   const incomes = useAppSelector(state => state.finance.incomes);
   const expenses = useAppSelector(state => state.finance.expenses);
   const month = useAppSelector(state => state.finance.month);
   const year = useAppSelector(state => state.finance.year);
-  // const dispatch = useAppDispatch();
-  const [type, setType] = useState('expenses');
+  const dispatch = useAppDispatch();
+  const [type, setType] = useState('expense');
+  const categories = type === 'expense' ? expenseCategories : incomeCategories;
   const [selectedItem, setSelectedItem] = useState({
     _id: '',
     description: '',
-    category: '',
+    category: categories[0],
     amount: 0,
-    date: '',
+    date: new Date().toISOString(),
   });
   const [isModalOpen, setModalOpen] = useState(false);
+
+  // console.log(expenses[1].date);
+  // console.log(selectedItem.date);
 
   const filteredIncome = useMemo(() =>
     filterItems(incomes, month, year), [incomes, month, year]);
   const filteredExpenses = useMemo(() =>
     filterItems(expenses, month, year), [expenses, month, year]);
 
-  const handleDetails = () => {
-    console.log('here');
+  const handleSaveItem = (item: Item) => {
+    axios({
+      method: 'post',
+      url: ENDPOINTS.SAVE_ITEM,
+      data: {
+        userId,
+        type,
+        item,
+      }
+    })
+    .then(res => {
+      dispatch(financesFetched(res.data));
+      handleCloseModal();
+    })
+    .catch(err => {
+      console.error(err);
+    });
   };
 
   const handleCloseModal = () => {
+    setSelectedItem({
+      _id: '',
+      description: '',
+      category: categories[0],
+      amount: 0,
+      date: new Date().toISOString(),
+    })
     setModalOpen(false);
   };
 
@@ -42,9 +73,9 @@ const Details = (): JSX.Element => {
       <h1>{months[Number.parseInt(month)]} {year}</h1>
       <div className='selection'>
         <button onClick={() => setType('income')}>Income</button>
-        <button onClick={() => setType('expenses')}>Expenses</button>
+        <button onClick={() => setType('expense')}>Expenses</button>
       </div>
-      { type === 'expenses' &&
+      { type === 'expense' &&
         <DetailsList
           items={filteredExpenses}
           setSelectedItem={setSelectedItem}
@@ -70,9 +101,8 @@ const Details = (): JSX.Element => {
         hasCloseBtn={true}
         onClose={handleCloseModal}
       >
-        <ItemForm item={selectedItem} handleSubmit={handleDetails}/>
+        <ItemForm item={selectedItem} handleSaveItem={handleSaveItem} type={type}/>
       </Modal>
-      <p>{selectedItem.description}</p>
     </div>
   );
 };

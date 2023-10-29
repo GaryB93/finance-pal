@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import DoughnutChart from "../DoughnutChart";
+import DoughnutChart from "../../components/DoughnutChart";
 // import Menu from '../Menu';
 import './Summary.css';
 import axios from 'axios';
@@ -11,7 +11,7 @@ import { generateYears } from '../../utils/generateYears';
 import { calculateTotal } from '../../utils/calculateTotal';
 import { filterItems } from '../../utils/filterItems';
 import { monthSelected, yearSelected } from '../../reducers/financeReducer';
-import { categories } from '../../constants/categories';
+import { expenseCategories } from '../../constants/categories';
 import { Link } from 'react-router-dom';
 
 const Summary = (): JSX.Element => {
@@ -48,13 +48,14 @@ const Summary = (): JSX.Element => {
     filterItems(expenses, month, year), [expenses, month, year]);
   const totalIncome = calculateTotal(filteredIncome);
   const totalExpenses = calculateTotal(filteredExpenses);
+  const total = (totalIncome - totalExpenses).toFixed(2);
   const years = generateYears(created);
 
   return (
     <div className='summary'>
       {/* <Menu /> */}
       <div id='doughnut-container'>
-        <DoughnutChart categories={categories} items={filteredExpenses}/>
+        <DoughnutChart categories={expenseCategories} items={filteredExpenses}/>
       </div>
       <div id='select'>
         <select aria-label={'month'} value={month} id='month-selector'
@@ -86,7 +87,7 @@ const Summary = (): JSX.Element => {
       <hr style={{ width: '90%'}}/>
       <div className={'month-summaries'}>
         <span>Total:</span>
-        <span>{(totalIncome - totalExpenses).toFixed(2)}</span>
+        <span>{total}</span>
       </div>
       <div className={'bottom'}>
         <Link to='/details'>Edit</Link>

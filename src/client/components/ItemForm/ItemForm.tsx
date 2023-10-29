@@ -1,30 +1,56 @@
 import { useState, useEffect } from "react";
 import { Item } from "../../reducers/financeReducer";
-import { categories } from "../../constants/categories";
+import { expenseCategories, incomeCategories } from "../../constants/categories";
+import { formatDate } from "../../utils/formatDate";
+import { addTimeZoneOffset } from "../../utils/addTimeZoneOffset";
 import './ItemForm.css';
 
-const ItemForm = ({ item, handleSubmit }: { item: Item, handleSubmit: () => void }) => {
+const ItemForm = ({ item, handleSaveItem, type }:
+  { item: Item, handleSaveItem: (item: Item) => void, type: string }) => {
   const [inputs, setInputs] = useState({
+    _id: item._id,
     description: item.description,
     category: item.category,
     amount: item.amount,
-    date: item.date,
+    date: formatDate(new Date(item.date)),
   });
+  const [errMessage, setErrMessage] = useState('');
+
+  useEffect(() => {
+    setInputs({
+      ...item,
+      date: formatDate(new Date(item.date)),
+    });
+  }, [item]);
+
+  const categories = type === 'expense' ? expenseCategories : incomeCategories;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setInputs({
+    setErrMessage('');
+      setInputs({
       ...inputs,
       [e.target.id]: e.target.value
     });
   };
 
-  useEffect(() => {
-    setInputs(item);
-  }, [item]);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (inputs.description === '') {
+      setErrMessage('Please enter a description');
+    } else if (inputs.amount <= 0) {
+      setErrMessage('Please enter an amount greater than 0');
+    } else {
+      handleSaveItem({
+        ...inputs,
+        date: addTimeZoneOffset(new Date(inputs.date)),
+        description: inputs.description.trim(),
+      });
+    }
+  };
 
   return (
     <form id='item-form'>
-      <h1>Item Details</h1>
+      <h1>{type === 'expense' ? 'Expense' : 'Income'} Details</h1>
       <label htmlFor='description'>Description</label>
       <input
         id='description'
@@ -40,8 +66,8 @@ const ItemForm = ({ item, handleSubmit }: { item: Item, handleSubmit: () => void
         value={inputs.category}
         onChange={handleChange}
       >
-        {categories.map(category =>
-          <option value={category} key={category}>{category}</option>
+        { categories.map(category =>
+            <option value={category} key={category}>{category}</option>
         )}
       </select>
 
@@ -62,10 +88,15 @@ const ItemForm = ({ item, handleSubmit }: { item: Item, handleSubmit: () => void
         onChange={handleChange}
       />
 
+      { errMessage !== '' &&
+        <p className='error-message' role='alert'>
+          { errMessage }
+        </p> }
+
       <button
         className='primary-btn'
         type='submit'
-        onClick={() => handleSubmit()}>
+        onClick={handleSubmit}>
         Save
       </button>
     </form>
