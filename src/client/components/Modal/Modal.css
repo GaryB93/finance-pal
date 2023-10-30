@@ -1,23 +1,34 @@
 .modal::backdrop {
-    background: hsla(0, 0%, 0%, 0.6);
+  background: hsla(0, 0%, 0%, 0.6);
 }
 
 .modal {
-    border: 1px solid var(--grey6);
-    border-radius: 0.5rem;
-    background-color: var(--grey2);
-    bottom: 20px;
-    color: var(--grey6);
-    width: 400px;
+  border: 1px solid var(--grey6);
+  border-radius: 0.3rem;
+  bottom: 200px;
+  color: var(--text);
+  width: 400px;
 }
 
-.modal div:first-of-type{
-    height: 2rem;
+@media (prefers-color-scheme: light) {
+  .modal {
+    background-color: var(--grey1);
+  }
 }
 
-.modal div:first-of-type button {
-   float: right;
-   background: none;
-   border: none;
-   color: var(--grey4);
+@media (prefers-color-scheme: dark) {
+  .modal {
+    background-color: var(--grey8);
+  }
+}
+
+.modal div:first-child button {
+  float: right;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+}
+
+.modal-close path {
+  stroke: var(--text);
 }
