@@ -1,7 +1,6 @@
 import { Item } from "../../reducers/financeReducer";
 import { Dispatch, SetStateAction } from 'react';
 import './DetailsListItem.css';
-import { formatDate } from "../../utils/formatDate";
 
 interface DetailsListItemProps {
   item: Item;
@@ -16,11 +15,18 @@ const DetailsListItem = ({ item, setSelectedItem, setModalOpen }: DetailsListIte
     setModalOpen(true);
   };
 
+  const dateDisplay = (itemDate: string) => {
+    const date = new Date(itemDate);
+    return `${date.getMonth() + 1}/${date.getDate()}`
+  };
+
   return (
     <li className='list-item'>
       <button onClick={handleClick}>
-        <span>{formatDate(new Date(item.date))}</span>
-        <span>{item.description}</span>
+        <span className='date-desc'>
+          <span>{dateDisplay(item.date)}</span>
+          <span>{item.description.length > 18 ? item.description.slice(0, 16) + '...' : item.description}</span>
+        </span>
         <span>{item.amount}</span>
       </button>
     </li>

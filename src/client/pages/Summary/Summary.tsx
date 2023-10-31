@@ -90,7 +90,7 @@ const Summary = (): JSX.Element => {
         <span>{total}</span>
       </div>
       <div className={'bottom'}>
-        <Link to='/details'>Edit</Link>
+        <Link to='/details' className='primary-btn'>Details</Link>
       </div>
     </div>
   )

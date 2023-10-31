@@ -6,14 +6,14 @@ export const chartData = (categories: Array<string>, totals: Array<number>) => {
         label: 'Expenses',
         data: totals,
         backgroundColor: [
-          'red',
-          'blue',
-          'green',
-          'yellow',
-          'purple',
-          'gray',
-          'orange',
-          'pink',
+          '#1a312a',
+          '#204339',
+          '#306454',
+          '#3f826e',
+          '#51a68c',
+          '#4fc19f',
+          '#5bdfb7',
+          '#92e2ca',
         ]
       }
     ]

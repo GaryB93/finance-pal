@@ -25,9 +25,18 @@
 
 .selection button {
   flex: 1;
+  background-color: var(--primary2);
+  border: 2px solid var(--primary4);
+  border-radius: .3rem;
+  color: var(--primary6);
 }
 
-.details div:last-of-type {
+.selection button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.nav-btns {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

@@ -2,4 +2,29 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  padding: .8rem .5rem;
+  background: none;
+  border: none;
+  border-top: 1px solid var(--text);
+}
+
+.list-item:last-of-type {
+  border-bottom: 1px solid var(--text);
+}
+
+@media (prefers-color-scheme: light) {
+  .list-item button:hover, .list-item button:active {
+    background-color: var(--grey2);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .list-item button:hover, .list-item button:active {
+    background-color: var(--grey7);
+  }
+}
+
+.date-desc span:first-of-type {
+  margin-right: 1rem;
+  color: var(--primary5);
 }

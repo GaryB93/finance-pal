@@ -13,6 +13,7 @@
   --primary5: #3f826e;
   --primary6: #306454;
   --primary7: #204339;
+  --primary8: #1a312a;
 
   /* greyscale */
   --grey1: #f1f1f1;
@@ -67,18 +68,33 @@ button {
 }
 
 .primary-btn {
-  background-image: linear-gradient(var(--primary2), var(--primary4));
-  border: 1px solid var(--primary7);
-  border-radius: .3rem;
-  color: var(--primary7);
+  display: block;
+  line-height: 1rem;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  background-color: var(--primary2);
+  border: 1px solid var(--primary4);
+  border-radius: .2rem;
+  color: var(--primary6);
 }
 
-.primary-btn:hover {
-  background-image: linear-gradient(var(--primary4), var(--primary4));
+.primary-btn:hover, .primary-btn:active {
+  background-color: var(--primary3);
 }
 
-.secondary-btn:hover {
-  background-color: var(--);
+.secondary-btn {
+  display: block;
+  line-height: 1rem;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  background-color: var(--grey2);
+  border: 1px solid var(--grey8);
+  border-radius: .2rem;
+  color: var(--grey8);
+}
+
+.secondary-btn:hover, .secondary-btn:active {
+  background-color: var(--grey3);
 }
 
 .error-message {
@@ -96,23 +112,11 @@ a {
 
 @media (prefers-color-scheme: light) {
   :root {
-    --text: var(--gunmetal);
-    --bg: var(--aliceblue);
+    --text: var(--grey7);
+    --bg: var(--grey1);
     color: var(--text);
     background-color: var(--bg);
   }
-
-  .secondary-btn {
-    background-image: linear-gradient(var(--azure), var(--lightblue2));
-    border: 1px solid var(--caribbeancurrent);
-    border-radius: .3rem;
-    color: var(--caribbeancurrent);
-  }
-
-  .secondary-btn:hover {
-    background-image: linear-gradient(var(--azure), var(--azure));
-  }
-  
 }
 
 @media (prefers-color-scheme: dark) {
@@ -121,16 +125,5 @@ a {
     --bg: var(--grey8);
     color: var(--text);
     background-color: var(--bg);
-  }
-
-  .secondary-btn {
-    background-image: linear-gradient(var(--azure), var(--lightblue2));
-    border: 1px solid var(--caribbeancurrent);
-    border-radius: .3rem;
-    color: var(--caribbeancurrent);
-  }
-
-  .secondary-btn:hover {
-    background-image: linear-gradient(var(--azure), var(--azure));
   }
 }

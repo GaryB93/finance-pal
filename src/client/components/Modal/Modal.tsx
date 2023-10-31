@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react';
+import { IconContext } from 'react-icons';
 import { GrClose } from 'react-icons/gr';
 import './Modal.css';
 
@@ -59,7 +60,11 @@ const Modal = ({ isOpen, hasCloseBtn, onClose, children }: ModalProps) => {
     <dialog ref={modalRef} className='modal' onKeyDown={handleKeyDown}>
       {hasCloseBtn &&
         <div>
-          <button onClick={handleCloseModal} aria-label='close' ref={closeRef}><GrClose/></button>
+          <button onClick={handleCloseModal} aria-label='close' ref={closeRef}>
+            <IconContext.Provider value={{ className: 'modal-close' }}>
+              <GrClose/>
+            </IconContext.Provider>
+          </button>
         </div>
       }
       {children}

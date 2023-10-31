@@ -30,9 +30,6 @@ const Details = (): JSX.Element => {
   });
   const [isModalOpen, setModalOpen] = useState(false);
 
-  // console.log(expenses[1].date);
-  // console.log(selectedItem.date);
-
   const filteredIncome = useMemo(() =>
     filterItems(incomes, month, year), [incomes, month, year]);
   const filteredExpenses = useMemo(() =>
@@ -72,8 +69,12 @@ const Details = (): JSX.Element => {
     <div className='details'>
       <h1>{months[Number.parseInt(month)]} {year}</h1>
       <div className='selection'>
-        <button onClick={() => setType('income')}>Income</button>
-        <button onClick={() => setType('expense')}>Expenses</button>
+        <button
+          disabled={type === 'income'}
+          onClick={() => setType('income')}>Income</button>
+        <button
+          disabled={type === 'expense'}
+          onClick={() => setType('expense')}>Expenses</button>
       </div>
       { type === 'expense' &&
         <DetailsList
@@ -92,8 +93,8 @@ const Details = (): JSX.Element => {
       <p>
         Select an item to edit
       </p>
-      <div>
-        <Link to='/summary'>Back</Link>
+      <div className='nav-btns'>
+        <Link to='/summary' className='secondary-btn'>Back</Link>
         <button className='primary-btn' onClick={() => setModalOpen(true)}>Add Item</button>
       </div>
       <Modal
