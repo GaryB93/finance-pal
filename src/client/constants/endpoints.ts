@@ -6,4 +6,5 @@ export const ENDPOINTS = {
   CHANGE_PASSWORD: 'api/user/password',
   GET_FINANCE_DATA: 'api/finance/',
   SAVE_ITEM: 'api/finance/item',
+  DELETE_ITEM: 'api/finance/item',
 };

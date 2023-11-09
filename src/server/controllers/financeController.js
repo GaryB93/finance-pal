@@ -18,7 +18,7 @@ const financeController = {
       date: item.date,
       description: item.description,
       category: item.category,
-      amount: item.amount,
+      amount: Number.parseFloat(item.amount.toFixed(2)),
     };
     try {
       let user;
@@ -38,14 +38,14 @@ const financeController = {
         if (type === 'expense') {
           user = await User.findOneAndUpdate(
             { _id: userId },
-            { $set: { 'expenses.$[item]': item } },
+            { $set: { 'expenses.$[item]': {...newItem, _id: item._id} } },
             { arrayFilters: [{ 'item._id': item._id }],
               returnDocument: 'after',
               lean: true }).exec();
         } else {
           user = await User.findOneAndUpdate(
             { _id: userId },
-            { $set: { 'incomes.$[item]': item } },
+            { $set: { 'incomes.$[item]': {...newItem, _id: item._id} } },
             { arrayFilters: [{ 'item._id': item._id }],
               returnDocument: 'after',
               lean: true }).exec();
@@ -60,6 +60,14 @@ const financeController = {
       return next(err);
     }
   },
+
+  // deleteItem: async (req, res, next) => {
+  //   const itemId = req.params.itemId;
+  //   const userId = req.body.userId;
+  //   try {
+  //     const user = User.findOne
+  //   }
+  // },
 };
 
 export default financeController;

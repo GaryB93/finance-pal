@@ -9,7 +9,7 @@ import { financesFetched } from '../../reducers/financeReducer';
 import { months } from '../../constants/months';
 import { generateYears } from '../../utils/generateYears';
 import { calculateTotal } from '../../utils/calculateTotal';
-import { filterItems } from '../../utils/filterItems';
+import { filterItems, todaysItems } from '../../utils/filterItems';
 import { monthSelected, yearSelected } from '../../reducers/financeReducer';
 import { expenseCategories } from '../../constants/categories';
 import { Link } from 'react-router-dom';
@@ -42,20 +42,24 @@ const Summary = (): JSX.Element => {
     };
   }, [userId, dispatch]);
   
-  const filteredIncome = useMemo(() =>
+  const monthlyIncomeItems = useMemo(() =>
     filterItems(incomes, month, year), [incomes, month, year]);
-  const filteredExpenses = useMemo(() =>
+  const monthlyExpenseItems = useMemo(() =>
     filterItems(expenses, month, year), [expenses, month, year]);
-  const totalIncome = calculateTotal(filteredIncome);
-  const totalExpenses = calculateTotal(filteredExpenses);
-  const total = (totalIncome - totalExpenses).toFixed(2);
-  const years = generateYears(created);
+  const dailyIncomeItems = todaysItems(monthlyIncomeItems);
+  const dailyExpenseItems = todaysItems(monthlyExpenseItems);
 
+  const monthlyIncome = calculateTotal(monthlyIncomeItems);
+  const monthlyExpenses = calculateTotal(monthlyExpenseItems);
+  const dailyIncome = calculateTotal(dailyIncomeItems);
+  const dailyExpense = calculateTotal(dailyExpenseItems);
+  const years = generateYears(created);
+  
   return (
     <div className='summary'>
       {/* <Menu /> */}
       <div id='doughnut-container'>
-        <DoughnutChart categories={expenseCategories} items={filteredExpenses}/>
+        <DoughnutChart categories={expenseCategories} items={monthlyExpenseItems}/>
       </div>
       <div id='select'>
         <select aria-label={'month'} value={month} id='month-selector'
@@ -78,16 +82,19 @@ const Summary = (): JSX.Element => {
       </div>
       <div className={'month-summaries'}>
         <span>Income:</span>
-        <span>{totalIncome.toFixed(2)}</span>
+        <span>{monthlyIncome.toFixed(2)}</span>
       </div>
       <div className={'month-summaries'}>
         <span>Expense:</span>
-        <span>{totalExpenses.toFixed(2)}</span>
+        <span>{monthlyExpenses.toFixed(2)}</span>
       </div>
       <hr style={{ width: '90%'}}/>
       <div className={'month-summaries'}>
         <span>Total:</span>
-        <span>{total}</span>
+        <span>{(monthlyIncome - monthlyExpenses).toFixed(2)}</span>
+      </div>
+      <div className='daily-spent'>
+        {`Today: $${dailyExpense}`}
       </div>
       <div className={'bottom'}>
         <Link to='/details' className='primary-btn'>Details</Link>

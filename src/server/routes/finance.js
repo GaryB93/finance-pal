@@ -12,6 +12,13 @@ financeRouter.get('/:userId',
 financeRouter.post('/item',
   financeController.saveItem,
   (req, res) => {
+    res.status(201).json(res.locals.items);
+  }
+);
+
+financeController.delete('/item/:itemId',
+  financeController.deleteItem,
+  (req, res) => {
     res.status(200).json(res.locals.items);
   }
 );

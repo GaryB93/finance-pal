@@ -1,24 +1,24 @@
 import { useMemo, useState } from "react";
-import { useAppSelector, useAppDispatch } from "../../hooks";
+import { useAppSelector } from "../../hooks";
 import { months } from "../../constants/months";
 import { filterItems } from "../../utils/filterItems";
 import DetailsList from "../../components/DetailsList";
 import { Link } from "react-router-dom";
 import Modal from "../../components/Modal/Modal";
 import ItemForm from "../../components/ItemForm";
-import { Item, financesFetched } from "../../reducers/financeReducer";
-import { ENDPOINTS } from "../../constants/endpoints";
+// import { Item, financesFetched } from "../../reducers/financeReducer";
+// import { ENDPOINTS } from "../../constants/endpoints";
 import { expenseCategories, incomeCategories } from "../../constants/categories";
-import axios from "axios";
+// import axios from "axios";
 import './Details.css';
 
 const Details = (): JSX.Element => {
-  const userId = useAppSelector(state => state.user.userId);
+  // const userId = useAppSelector(state => state.user.userId);
   const incomes = useAppSelector(state => state.finance.incomes);
   const expenses = useAppSelector(state => state.finance.expenses);
   const month = useAppSelector(state => state.finance.month);
   const year = useAppSelector(state => state.finance.year);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const [type, setType] = useState('expense');
   const categories = type === 'expense' ? expenseCategories : incomeCategories;
   const [selectedItem, setSelectedItem] = useState({
@@ -35,24 +35,24 @@ const Details = (): JSX.Element => {
   const filteredExpenses = useMemo(() =>
     filterItems(expenses, month, year), [expenses, month, year]);
 
-  const handleSaveItem = (item: Item) => {
-    axios({
-      method: 'post',
-      url: ENDPOINTS.SAVE_ITEM,
-      data: {
-        userId,
-        type,
-        item,
-      }
-    })
-    .then(res => {
-      dispatch(financesFetched(res.data));
-      handleCloseModal();
-    })
-    .catch(err => {
-      console.error(err);
-    });
-  };
+  // const handleSaveItem = (item: Item) => {
+  //   axios({
+  //     method: 'post',
+  //     url: ENDPOINTS.SAVE_ITEM,
+  //     data: {
+  //       userId,
+  //       type,
+  //       item,
+  //     }
+  //   })
+  //   .then(res => {
+  //     dispatch(financesFetched(res.data));
+  //     handleCloseModal();
+  //   })
+  //   .catch(err => {
+  //     console.error(err);
+  //   });
+  // };
 
   const handleCloseModal = () => {
     setSelectedItem({
@@ -102,7 +102,7 @@ const Details = (): JSX.Element => {
         hasCloseBtn={true}
         onClose={handleCloseModal}
       >
-        <ItemForm item={selectedItem} handleSaveItem={handleSaveItem} type={type}/>
+        <ItemForm item={selectedItem} handleCloseModal={handleCloseModal} type={type}/>
       </Modal>
     </div>
   );

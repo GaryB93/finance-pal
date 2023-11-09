@@ -37,6 +37,11 @@
   width: 90%;
 }
 
+.daily-spent {
+  font-size: 2rem;
+  margin-top: 4rem;
+}
+
 .bottom {
   display: flex;
   flex-direction: row;

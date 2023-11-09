@@ -26,8 +26,10 @@
   --grey8: #1f1f1f;
 
   /*error messages*/
-  --red: #ff8383;
-  --darkred: #700119;
+  --red: #d32b2b;
+  --red2: #b82525;
+  --lightred: #ff7777;
+  --darkred: #8a000e;
 
   /*links*/
   --link: #1C77C3;
@@ -73,7 +75,7 @@ button {
   padding: 0.5rem 1rem;
   text-decoration: none;
   background-color: var(--primary2);
-  border: 1px solid var(--primary4);
+  border: none;
   border-radius: .2rem;
   color: var(--primary6);
 }
@@ -97,10 +99,25 @@ button {
   background-color: var(--grey3);
 }
 
-.error-message {
+.warning-btn {
+  display: block;
+  line-height: 1rem;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
   background-color: var(--red);
-  border: 1px solid var(--darkred);
-  border-radius: .3rem;
+  border: none;
+  border-radius: .2rem;
+  color: var(--grey1);
+}
+
+.warning-btn:hover, .warning-btn:active {
+  background-color: var(--red2);
+}
+
+.error-message {
+  background-color: var(--lightred);
+  border: none;
+  border-radius: .2rem;
   padding: .5rem;
   color: var(--darkred);
   margin: .5rem 0;

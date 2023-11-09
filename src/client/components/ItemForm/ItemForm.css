@@ -12,6 +12,16 @@
   margin-bottom: 1rem;
 }
 
+#item-form div:last-child {
+  display: flex;
+  gap: 1rem;
+  margin-top: .5rem;
+}
+
+#item-form div:last-child button {
+  flex: 1;
+}
+
 .remove-arrows::-webkit-outer-spin-button,
 .remove-arrows::-webkit-inner-spin-button {
   -webkit-appearance: none;
